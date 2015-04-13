@@ -81,7 +81,9 @@ public class UIAdapterActivity01 extends ActionBarActivity {
 			    lp.topMargin = (int) res.getDimension(
 			    		R.dimen.text_margin_top);
 			    String textStr = res.getString(R.string.hello_world);
+			    int color = res.getColor(R.color.text_color);
 			    text.setText(textStr);
+			    text.setTextColor(color);
 			    text.setLayoutParams(lp);
 			    
 			}
