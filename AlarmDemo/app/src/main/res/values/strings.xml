@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">AlarmDemo</string>
+
+    <string name="hello_world">Alarm Demos</string>
+    <string name="action_settings">Settings</string>
+    <string name="set_alarm">设置闹钟</string>
+</resources>

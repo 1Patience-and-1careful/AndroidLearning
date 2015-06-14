@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="Alarm_types">
+        <item>ETC</item>
+        <item>ETC_WAKEUP</item>
+        <item>RTC</item>
+        <item>RTC_WAKEUP</item>
+    </string-array>
+
+
+</resources>
