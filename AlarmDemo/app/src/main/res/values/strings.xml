@@ -4,4 +4,9 @@
     <string name="hello_world">Alarm Demos</string>
     <string name="action_settings">Settings</string>
     <string name="set_alarm">设置闹钟</string>
+
+    <string name="title_activity_alarm_fullscreen">AlarmFullscreenActivity</string>
+    <string name="dummy_button">Stop alarm</string>
+    <string name="dummy_content">Alarm\nAlarming</string>
+    <string name="set_alarm_at">设置闹钟在:</string>
 </resources>

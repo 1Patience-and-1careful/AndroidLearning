@@ -13,6 +13,8 @@ import android.view.View;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import java.util.Calendar;
+
 
 public class AlarmMainActivity extends ActionBarActivity implements View.OnClickListener {
 
@@ -68,12 +70,19 @@ public class AlarmMainActivity extends ActionBarActivity implements View.OnClick
     @Override
     public void onClick(View v) {
         int vId = v.getId();
+        Context context = getApplicationContext();
         switch (vId) {
             case R.id.set_alarm_btn:
 
-                Toast.makeText(getApplicationContext(), "Set Alarm:" + mAlarmType, Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent();
-                mAlarmIntent = intent.
+                Intent intent = new Intent(context, AlarmReceiver.class);
+                mAlarmIntent = PendingIntent.getBroadcast(context,
+                        0,intent,0);
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTimeInMillis(System.currentTimeMillis());
+                calendar.set(Calendar.HOUR_OF_DAY, mPickHour);
+                calendar.set(Calendar.MINUTE, mPickMinute);
+                mAlarmMgr.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),mAlarmIntent );
+                Toast.makeText(getApplicationContext(), getResources().getString(R.string.set_alarm_at) + mPickHour + ":" + mPickMinute , Toast.LENGTH_SHORT).show();
                 break;
             default:
                 break;
