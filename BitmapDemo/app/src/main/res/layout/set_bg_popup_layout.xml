@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="246dp"
+    android:background="#3fffed00"
+    android:descendantFocusability="blocksDescendants"
+    android:orientation="vertical"
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp">
+
+        <TextView
+            android:id="@+id/choose_bg_popup_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/popup_title"
+            android:textColor="@android:color/holo_blue_light"
+            android:textSize="20sp"
+            android:layout_alignParentStart="true"
+            tools:ignore="RtlCompat" />
+
+        <ImageButton
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/close_popup"
+            android:layout_alignParentEnd="true"
+            android:alpha="0.8"
+            android:scaleType="fitXY"
+            android:background="#00101010"
+            tools:ignore="RtlCompat" />
+
+    </RelativeLayout>
+
+
+          <GridView
+            android:id="@+id/background_grid"
+            android:layout_width="match_parent"
+            android:layout_height="210dp"
+            android:columnWidth="100dp"
+            android:horizontalSpacing="8dp"
+            android:verticalSpacing="8dp"
+            android:layout_marginStart="8dp"
+            android:stretchMode="columnWidth"
+            android:numColumns="auto_fit"
+              tools:ignore="RtlCompat" />
+
+
+
+
+
+</LinearLayout>

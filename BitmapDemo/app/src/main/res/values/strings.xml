@@ -3,4 +3,6 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="action_set_background">Set Background</string>
+    <string name="popup_title">Set Background for paint pad</string>
 </resources>
