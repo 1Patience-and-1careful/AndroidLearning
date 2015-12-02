@@ -9,6 +9,11 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.ParcelFileDescriptor;
 
+/**
+ * 
+ * @author hanlyjiang@outlook.com
+ *
+ */
 public class BitmapUtils {
 	
 	/**
