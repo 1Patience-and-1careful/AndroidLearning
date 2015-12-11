@@ -2,19 +2,27 @@ package com.hanlyjiang.android.window;
 
 import android.animation.ValueAnimator;
 import android.animation.ValueAnimator.AnimatorUpdateListener;
-import android.annotation.TargetApi;
-import android.os.Build;
+import android.app.Activity;
 import android.util.DisplayMetrics;
 import android.view.Window;
 import android.view.WindowManager;
 
-@TargetApi(Build.VERSION_CODES.HONEYCOMB)
+import com.hanlyjiang.android.LogUtils;
+
 public class WindowUtils {
 
 	public WindowUtils() {
-		// TODO Auto-generated constructor stub
 	}
 	
+	/** 
+	 * 输出设备信息
+	 */
+    public static  void testDeviceDPI(Activity mActivity){
+		DisplayMetrics outMetrics = new DisplayMetrics();
+		mActivity.getWindowManager().getDefaultDisplay().getMetrics(outMetrics);;
+		LogUtils.logDebug(mActivity, "DPI Str:" + getDPIString(outMetrics.densityDpi) 
+				+ "; dpi:" + getDensityStr(outMetrics.density));
+	}
 	
 	 /**
      * 调整窗口的透明度
@@ -81,5 +89,9 @@ public class WindowUtils {
 		}
 		return str;
 	}
-
+    
+	public static String getDensityStr(float dd){
+		return String.valueOf(dd*160);
+	}
+    
 }

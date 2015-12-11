@@ -24,5 +24,7 @@
         <item name="android:paddingLeft">@dimen/search_icon_padding</item>
         <item name="android:paddingRight">@dimen/search_icon_padding</item>
     </style>
+    
+        
 
 </resources>
