@@ -4,6 +4,7 @@ import android.animation.ValueAnimator;
 import android.animation.ValueAnimator.AnimatorUpdateListener;
 import android.annotation.TargetApi;
 import android.os.Build;
+import android.util.DisplayMetrics;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -46,6 +47,39 @@ public class WindowUtils {
 		WindowManager.LayoutParams lp = window.getAttributes();
         lp.alpha = bgAlpha; //0.0-1.0
         window.setAttributes(lp);
+	}
+    
+    public static String getDPIString(int de){
+		String str = null;
+		switch (de) {
+		case DisplayMetrics.DENSITY_400:
+			str = "DENSITY_400";
+			break;
+		case DisplayMetrics.DENSITY_DEFAULT:
+			str = "DENSITY_DEFAULT == DENSITY_MEDIUM";
+			break;
+		case DisplayMetrics.DENSITY_HIGH:
+			str = "DENSITY_HIGH";
+			break;
+		case DisplayMetrics.DENSITY_LOW:
+			str = "DENSITY_LOW";
+			break;
+		case DisplayMetrics.DENSITY_TV:
+			str = "DENSITY_TV";
+			break;
+		case DisplayMetrics.DENSITY_XHIGH:
+			str = "DENSITY_XHIGH";
+			break;
+		case DisplayMetrics.DENSITY_XXHIGH:
+			str = "DENSITY_XXHIGH";
+			break;
+		case DisplayMetrics.DENSITY_XXXHIGH:
+			str = "DENSITY_XXXHIGH";
+			break;
+		default:
+			break;
+		}
+		return str;
 	}
 
 }
