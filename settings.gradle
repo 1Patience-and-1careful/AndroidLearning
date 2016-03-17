@@ -1,1 +1,1 @@
-include ':mobile', ':wear', ':tv', ':loaderdemo'
+include ':mobile', ':wear', ':tv', ':loaderdemo', ':draglistdemo'
