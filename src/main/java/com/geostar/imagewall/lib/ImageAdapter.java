@@ -36,8 +36,24 @@ public class ImageAdapter extends RecyclerView.Adapter {
 
     private int mCurrentPage = 1; // 从1开始
     private int mPageSize = 20;
+    private int mCurrentStart = 0; // 当前开始的地方
 
-    public ImageAdapter(Context context, Cursor cursor,Picasso picasso) {
+    public int getmCurrentStart() {
+        return mCurrentStart;
+    }
+
+    public void setCurrentStart(int startIndex) {
+        if(startIndex < 0 ){
+            mCurrentStart = 0;
+        }else if(startIndex >= mDataCursor.getCount() - mPageSize ){
+            mCurrentStart = mDataCursor.getCount() - mPageSize;
+        }else {
+            mCurrentStart = startIndex;
+        }
+        notifyDataSetChanged();
+    }
+
+    public ImageAdapter(Context context, Cursor cursor, Picasso picasso) {
         this.mDataCursor = cursor;
         mContext = context;
         imageWidth = mContext.getResources().getDimensionPixelOffset(R.dimen.image_width);
@@ -167,7 +183,8 @@ public class ImageAdapter extends RecyclerView.Adapter {
 
     private int getRealDataPosition(int postion) {
 //            return postion + (mCurrentPage-1)*mPageSize;
-        return (mCurrentPage - 1) * mPageSize + postion - 1;
+        return mCurrentStart + postion;
+//        return (mCurrentPage - 1) * mPageSize + postion - 1;
 //        return postion;
     }
 

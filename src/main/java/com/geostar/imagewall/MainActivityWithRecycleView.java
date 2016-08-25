@@ -44,6 +44,8 @@ public class MainActivityWithRecycleView extends AppCompatActivity {
     private ImageView mPhotoImageView;
     private PhotoViewAttacher mPhotoOperateAttacher;
     private Picasso mPicasso;
+    private LinearLayoutManager mLayoutManager;
+    private ImageAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,8 +55,8 @@ public class MainActivityWithRecycleView extends AppCompatActivity {
         initialPicasso();
 
         mHorizontalView = (RecyclerView) findViewById(R.id.hGridview);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        mHorizontalView.setLayoutManager(layoutManager);
+        mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        mHorizontalView.setLayoutManager(mLayoutManager);
 
         mPhotoImageView = (ImageView) findViewById(R.id.iv_pic_viewer);
         mPhotoOperateAttacher = new PhotoViewAttacher(mPhotoImageView);
@@ -90,7 +92,7 @@ public class MainActivityWithRecycleView extends AppCompatActivity {
     }
 
     private void initialHorizontalView() {
-        ImageAdapter adapter = new ImageAdapter(this, mImagesCursor,getPicasso());
+        adapter = new ImageAdapter(this, mImagesCursor,getPicasso());
         adapter.setOnItemClickListener(new ImageAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View v, String itemImagePath) {
@@ -132,17 +134,44 @@ public class MainActivityWithRecycleView extends AppCompatActivity {
 
     class MyScrollListener extends RecyclerView.OnScrollListener {
 
+        private boolean isScrollLeft;
         public MyScrollListener() {
         }
 
         @Override
         public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
             super.onScrollStateChanged(recyclerView, newState);
+            switch (newState){
+                case RecyclerView.SCROLL_STATE_SETTLING:// 正在滑动，但是没有外部输入
+                    int firstPos = mLayoutManager.findFirstVisibleItemPosition();
+                    int lastPos = mLayoutManager.findLastVisibleItemPosition();
+                    if(isScrollLeft) {
+                        if (firstPos-5 > 0) {
+                            adapter.setCurrentStart(firstPos-5);
+                        }
+                    }else{
+                        if (adapter.getItemCount() - lastPos <= 5) {
+                            adapter.setCurrentStart(firstPos);
+                        }
+                    }
+                    Log.d(TAG, String.format(Locale.CHINA, "isScrollLeft=%s ; fisrtPos=%d; lastPos=%d ; ", isScrollLeft
+                            ,firstPos,lastPos));
+                    break;
+                case RecyclerView.SCROLL_STATE_IDLE:
+
+                    break;
+                case RecyclerView.SCROLL_STATE_DRAGGING:
+
+                    break;
+                default:
+                    break;
+            }
         }
 
         @Override
         public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
             super.onScrolled(recyclerView, dx, dy);
+            isScrollLeft = dx < 0;
             Log.d(TAG, String.format(Locale.CHINA, "dx=%d ; dy=%d ; ", dx, dy));
         }
     }
