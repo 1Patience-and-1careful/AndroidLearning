@@ -75,12 +75,24 @@ public class MainActivityWithRecycleView extends AppCompatActivity {
     }
 
     private void initialHorizontalView() {
-        ImageAdapter adapter = new ImageAdapter(this, this, mImagesCursor);
+        ImageAdapter adapter = new ImageAdapter(this, mImagesCursor);
         adapter.setOnItemClickListener(new ImageAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View v, String itemImagePath) {
                 Picasso.with(getApplicationContext()).load(new File(itemImagePath)).into(mPhotoImageView);
                 mPhotoOperateAttacher.update();
+            }
+        });
+        adapter.setOnPageChangedListener(new ImageAdapter.OnPageChangedListener() {
+
+            @Override
+            public void toPrivPage(ImageAdapter adapter) {
+                mHorizontalView.getLayoutManager().scrollToPosition(1);
+            }
+
+            @Override
+            public void toNextPage(ImageAdapter adapter) {
+                mHorizontalView.getLayoutManager().scrollToPosition(1);
             }
         });
         mHorizontalView.setAdapter(adapter);

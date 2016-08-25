@@ -7,8 +7,8 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.geostar.imagewall.R;
 import com.squareup.picasso.Picasso;
@@ -22,17 +22,19 @@ import java.util.Locale;
 public class ImageAdapter extends RecyclerView.Adapter {
 
     private static final String TAG = "ImageAdapter";
+
+    private static final int HEADER = -1;
+    private static final int CONTENT = 0;
+    private static final int FOOTER = 1;
+
     private Cursor mDataCursor;
     private Context mContext;
+    private int imageHeight, imageWidth;
+    private OnItemClickListener mOnItemClickListener;
+    private OnPageChangedListener mOnPageChangedListener;
+
     private int mCurrentPage = 1; // 从1开始
     private int mPageSize = 20;
-
-    private int imageHeight,imageWidth;
-
-
-    private OnItemClickListener mOnItemClickListener;
-
-
 
     public ImageAdapter(Context context, Cursor cursor) {
         this.mDataCursor = cursor;
@@ -41,45 +43,91 @@ public class ImageAdapter extends RecyclerView.Adapter {
         imageHeight = mContext.getResources().getDimensionPixelOffset(R.dimen.image_height);
     }
 
+
     @Override
     public int getItemViewType(int position) {
-//            if(position == 0 ){
-//                return -1;
-//            }else if (position == mPageSize){
-//                return 1;
-//            }
-        return 0;
-//            return super.getItemViewType(position);
+        if (position == 0) {
+            return HEADER;
+        } else if (position == getItemCount() - 1) {
+            return FOOTER;
+        }
+        return CONTENT;
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if (viewType == -1 || viewType == 1) {
-            TextView convertView = (TextView) View.inflate(mContext, android.R.layout.simple_list_item_1, null);
-            convertView.setText(viewType == -1 ? "上一页" : "下一页");
-            return new TextHolder(convertView);
+        RecyclerView.ViewHolder holder = null;
+        View view = null;
+        switch (viewType) {
+            case HEADER:
+                view = View.inflate(mContext, R.layout.text_item, null);
+                ((Button) view.findViewById(R.id.text)).setText("上一页");
+                holder = new TextHolder(view);
+                break;
+            case FOOTER:
+                view = View.inflate(mContext, R.layout.text_item, null);
+                ((Button) view.findViewById(R.id.text)).setText("下一页");
+                holder = new TextHolder(view);
+                break;
+            case CONTENT:
+                view = View.inflate(mContext, R.layout.image_item, null);
+                holder = new ImageHolder(view);
+                break;
+            default:
+                break;
         }
-        View v = View.inflate(mContext, R.layout.image_item, null);
-        ImageHolder holder = new ImageHolder(v);
         return holder;
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if (holder instanceof ImageHolder) {
-            if (position < 0 || position > getItemCount()) return;
-            mDataCursor.moveToFirst();
-            mDataCursor.move(getRealDataPosition(position));
-            int index = mDataCursor.getColumnIndex(MediaStore.Images.Media.DATA);
-            Log.d(TAG, String.format(Locale.CHINA, "postion=%d, index=%d", getRealDataPosition(position), index));
-            String imageData = mDataCursor.getString(index);
-            ImageView imageView = ((ImageHolder) holder).image;
-            imageView.setOnClickListener(createOnClickListener(imageData));
+        switch (getItemViewType(position)) {
+            case HEADER:
+                ((TextHolder) holder).textView.setVisibility(mCurrentPage == 1 ? View.GONE : View.VISIBLE);
+                ((TextHolder) holder).textView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mCurrentPage -= 1;
+                        notifyDataSetChanged();
+                        if(mOnPageChangedListener != null){
+                            mOnPageChangedListener.toPrivPage(ImageAdapter.this);
+                        }
+                    }
+                });
+                break;
+            case FOOTER:
+                ((TextHolder) holder).textView.setVisibility(isLastItem() ? View.GONE : View.VISIBLE);
+                ((TextHolder) holder).textView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mCurrentPage += 1;
+                        notifyDataSetChanged();
+                        if(mOnPageChangedListener != null){
+                            mOnPageChangedListener.toNextPage(ImageAdapter.this);
+                        }
+                    }
+                });
+                break;
+            case CONTENT:
+                mDataCursor.moveToFirst();
+                mDataCursor.move(getRealDataPosition(position));
+                int index = mDataCursor.getColumnIndex(MediaStore.Images.Media.DATA);
+                Log.d(TAG, String.format(Locale.CHINA, "postion=%d, index=%d", getRealDataPosition(position), index));
+                String imageData = mDataCursor.getString(index);
+                ImageView imageView = ((ImageHolder) holder).image;
+                imageView.setOnClickListener(createOnClickListener(imageData));
 
-            Picasso.with(imageView.getContext()).load(new File(imageData)).resize(imageWidth, imageHeight)
-                    .centerInside()
-                    .into(imageView);
+                Picasso.with(imageView.getContext()).load(new File(imageData)).resize(imageWidth, imageHeight)
+                        .centerInside()
+                        .into(imageView);
+                break;
+            default:
+                break;
         }
+    }
+
+    private boolean isLastItem() {
+        return mCurrentPage == mDataCursor.getCount() / mPageSize + 1;
     }
 
     public interface OnItemClickListener {
@@ -88,10 +136,18 @@ public class ImageAdapter extends RecyclerView.Adapter {
 
     }
 
+    public interface OnPageChangedListener{
+        void toPrivPage(ImageAdapter adapter);
+        void toNextPage(ImageAdapter adapter);
+    }
+
     public void setOnItemClickListener(OnItemClickListener listener) {
         this.mOnItemClickListener = listener;
     }
 
+    public void setOnPageChangedListener(OnPageChangedListener pageChangedListener) {
+        this.mOnPageChangedListener = pageChangedListener;
+    }
 
     private View.OnClickListener createOnClickListener(final String imageData) {
         return new View.OnClickListener() {
@@ -106,14 +162,15 @@ public class ImageAdapter extends RecyclerView.Adapter {
 
     private int getRealDataPosition(int postion) {
 //            return postion + (mCurrentPage-1)*mPageSize;
-        return postion;
+        return (mCurrentPage - 1) * mPageSize + postion - 1;
+//        return postion;
     }
 
 
     @Override
     public int getItemCount() {
 //            return cursor.getCount()>mPageSize?mPageSize:cursor.getCount();
-        return mDataCursor.getCount();
+        return mDataCursor.getCount() < mPageSize ? mDataCursor.getCount() : mPageSize + 2; // Add Header and Footer
     }
 
     class ImageHolder extends RecyclerView.ViewHolder {
@@ -127,11 +184,11 @@ public class ImageAdapter extends RecyclerView.Adapter {
     }
 
     class TextHolder extends RecyclerView.ViewHolder {
-        TextView textView;
+        Button textView;
 
         public TextHolder(View itemView) {
             super(itemView);
-            this.textView = (TextView) itemView;
+            this.textView = (Button) itemView.findViewById(R.id.text);
         }
     }
 }
