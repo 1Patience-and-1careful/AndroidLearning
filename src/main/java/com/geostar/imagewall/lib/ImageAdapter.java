@@ -138,6 +138,9 @@ public class ImageAdapter extends RecyclerView.Adapter {
 
     }
 
+    /**
+     * 翻页时调用的逻辑
+     */
     public interface OnPageChangedListener{
         void toPrivPage(ImageAdapter adapter);
         void toNextPage(ImageAdapter adapter);
