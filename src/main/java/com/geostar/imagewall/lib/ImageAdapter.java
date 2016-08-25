@@ -32,15 +32,17 @@ public class ImageAdapter extends RecyclerView.Adapter {
     private int imageHeight, imageWidth;
     private OnItemClickListener mOnItemClickListener;
     private OnPageChangedListener mOnPageChangedListener;
+    private Picasso mPicasso;
 
     private int mCurrentPage = 1; // 从1开始
     private int mPageSize = 20;
 
-    public ImageAdapter(Context context, Cursor cursor) {
+    public ImageAdapter(Context context, Cursor cursor,Picasso picasso) {
         this.mDataCursor = cursor;
         mContext = context;
         imageWidth = mContext.getResources().getDimensionPixelOffset(R.dimen.image_width);
         imageHeight = mContext.getResources().getDimensionPixelOffset(R.dimen.image_height);
+        mPicasso = picasso;
     }
 
 
@@ -117,7 +119,7 @@ public class ImageAdapter extends RecyclerView.Adapter {
                 ImageView imageView = ((ImageHolder) holder).image;
                 imageView.setOnClickListener(createOnClickListener(imageData));
 
-                Picasso.with(imageView.getContext()).load(new File(imageData)).resize(imageWidth, imageHeight)
+                mPicasso.load(new File(imageData)).resize(imageWidth, imageHeight)
                         .centerInside()
                         .into(imageView);
                 break;

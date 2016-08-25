@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.geostar.imagewall.lib.ImageAdapter;
+import com.squareup.picasso.LruCache;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -37,17 +38,19 @@ public class MainActivityWithRecycleView extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
 
-
     private RecyclerView mHorizontalView = null;
     private Cursor mImagesCursor;
     private int mLastVisableItem;
     private ImageView mPhotoImageView;
     private PhotoViewAttacher mPhotoOperateAttacher;
+    private Picasso mPicasso;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        initialPicasso();
 
         mHorizontalView = (RecyclerView) findViewById(R.id.hGridview);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
@@ -60,6 +63,18 @@ public class MainActivityWithRecycleView extends AppCompatActivity {
         initialHorizontalView();
     }
 
+    /**
+     * 自定义Picasso 的设置
+     */
+    private void initialPicasso() {
+        // 设置最大可用内存的 1/20 为图片加载器的内存缓存
+        int cacheSize =  (int) (Runtime.getRuntime().maxMemory())/20;
+        mPicasso = new Picasso.Builder(this).memoryCache(new LruCache(cacheSize)).build();
+    }
+
+    public Picasso getPicasso(){
+        return mPicasso;
+    }
 
     public Cursor queryMediaStoreImages() {
         Uri uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
@@ -75,11 +90,11 @@ public class MainActivityWithRecycleView extends AppCompatActivity {
     }
 
     private void initialHorizontalView() {
-        ImageAdapter adapter = new ImageAdapter(this, mImagesCursor);
+        ImageAdapter adapter = new ImageAdapter(this, mImagesCursor,getPicasso());
         adapter.setOnItemClickListener(new ImageAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View v, String itemImagePath) {
-                Picasso.with(getApplicationContext()).load(new File(itemImagePath)).into(mPhotoImageView);
+                getPicasso().load(new File(itemImagePath)).into(mPhotoImageView);
                 mPhotoOperateAttacher.update();
             }
         });
@@ -106,6 +121,7 @@ public class MainActivityWithRecycleView extends AppCompatActivity {
         if (mImagesCursor != null) {
             mImagesCursor.close();
         }
+        mPicasso.shutdown();
     }
 
 
