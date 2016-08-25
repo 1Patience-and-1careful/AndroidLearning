@@ -9,7 +9,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
-import android.support.v17.leanback.widget.HorizontalGridView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -17,6 +16,8 @@ import android.util.LruCache;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.BaseAdapter;
+import android.widget.GridView;
 import android.widget.ImageView;
 
 import com.geostar.imagewall.cache.BitmapUtils;
@@ -36,10 +37,10 @@ import java.util.Map;
  * https://developer.android.com/reference/android/support/v17/leanback/widget/HorizontalGridView.html
  * https://developer.android.com/reference/android/support/v17/leanback/widget/HorizontalGridView.html
  */
-public class MainActivity extends AppCompatActivity implements AbsListView.OnScrollListener {
+public class GridViewActivity extends AppCompatActivity implements AbsListView.OnScrollListener {
 
     private static final String TAG = "MainActivity" ;
-    private HorizontalGridView gridView = null;
+    private GridView gridView = null;
     private Cursor cursor;
     private DiskLruCache disCache;
     private LruCache<String, Bitmap> mMemoryCache;
@@ -48,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements AbsListView.OnScr
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_grid);
         // 返回M
 //        final int memClass = ((ActivityManager)getSystemService(Context.ACTIVITY_SERVICE)).getMemoryClass();
         // 返回byte
@@ -65,13 +66,12 @@ public class MainActivity extends AppCompatActivity implements AbsListView.OnScr
 
             @Override
             protected void entryRemoved(boolean evicted, String key, Bitmap oldValue, Bitmap newValue) {
-                oldValue.recycle();
-                oldValue = null;
+//                oldValue.recycle();
                 Log.d(TAG,"entryRemoved : " + key);
                 super.entryRemoved(evicted, key, oldValue, newValue);
             }
         };
-        gridView = (HorizontalGridView) findViewById(R.id.hGridview);
+        gridView = (GridView) findViewById(R.id.hGridview);
         queryImages();
     }
 
@@ -102,11 +102,12 @@ public class MainActivity extends AppCompatActivity implements AbsListView.OnScr
     }
 
 
+
     public void loadBitmap(String imageFilePath, ImageView imageView) {
         final String imageKey = getImageFileKey(imageFilePath);
 
         final Bitmap bitmap = getBitmapFromMemCache(imageKey);
-        if (bitmap != null && !bitmap.isRecycled()) {
+        if (bitmap != null) {
             imageView.setImageBitmap(bitmap);
         } else {
             if(mReadPicWork.containsKey(imageKey)){
@@ -116,6 +117,8 @@ public class MainActivity extends AppCompatActivity implements AbsListView.OnScr
             BitmapWorkerTask task = new BitmapWorkerTask(imageView,imageFilePath);
             mReadPicWork.put(imageKey,task);
             task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+//            task.execute(imageFilePath);
+//            mWorkThreads.execute(new BitMapLoader(imageView,imageFilePath));
         }
     }
 
@@ -153,7 +156,8 @@ public class MainActivity extends AppCompatActivity implements AbsListView.OnScr
         @Override
         public void run() {
             final Bitmap bitmap = BitmapUtils.decodeSampledBitmapFromFile(
-                    mImagePath, getResources().getDimensionPixelOffset(R.dimen.image_width), getResources().getDimensionPixelOffset(R.dimen.image_height));
+                    mImagePath, getResources().getDimensionPixelOffset(R.dimen.image_width),
+                    getResources().getDimensionPixelOffset(R.dimen.image_height));
             addBitmapToMemoryCache(getImageFileKey(mImagePath),bitmap);
             mImageView.post(new Runnable() {
                 @Override
@@ -207,7 +211,7 @@ public class MainActivity extends AppCompatActivity implements AbsListView.OnScr
     }
 
 
-    class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageHolder> {
+    class ImageAdapter extends BaseAdapter{
 
         private static final String TAG = "ImageAdapter";
         private Cursor cursor;
@@ -219,27 +223,44 @@ public class MainActivity extends AppCompatActivity implements AbsListView.OnScr
         }
 
         @Override
-        public ImageHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View v = View.inflate(mContext, R.layout.image_item, null);
-            ImageHolder holder = new ImageHolder(v);
-            return holder;
+        public int getCount() {
+            return cursor.getCount();
         }
 
         @Override
-        public void onBindViewHolder(ImageHolder holder, int position) {
-            if (position < 0 || position > getItemCount()) return;
+        public Cursor getItem(int position) {
             cursor.moveToFirst();
             cursor.move(position);
-            int index = cursor.getColumnIndex(MediaStore.Images.Media.DATA);
-            Log.d(TAG, String.format(Locale.CHINA, "postion=%d, index=%d", position, index));
-            String imageData = cursor.getString(index);
-            loadBitmap(imageData, holder.image);
+            return cursor;
         }
 
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
 
         @Override
-        public int getItemCount() {
-            return cursor.getCount();
+        public View getView(int position, View convertView, ViewGroup parent) {
+            ImageHolder holder = null;
+            if(convertView == null){
+                convertView  = View.inflate(mContext, R.layout.image_item, null);
+                holder = new ImageHolder(convertView);
+                convertView.setTag(holder);
+            }else{
+                holder = (ImageHolder) convertView.getTag();
+            }
+            if (position < 0 || position > getCount()) {
+
+            }else {
+                cursor.moveToFirst();
+                cursor.move(position);
+                int index = cursor.getColumnIndex(MediaStore.Images.Media.DATA);
+                Log.d(TAG, String.format(Locale.CHINA, "postion=%d, index=%d", position, index));
+                String imageData = cursor.getString(index);
+                loadBitmap(imageData, holder.image);
+            }
+            return convertView;
+
         }
 
         class ImageHolder extends RecyclerView.ViewHolder {

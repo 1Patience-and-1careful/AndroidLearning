@@ -12,17 +12,11 @@
     android:orientation="vertical"
     >
 
-    <ImageView
-        android:id="@+id/iv_pic_viewer"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:src="@mipmap/ic_launcher"
-        />
 
-    <android.support.v7.widget.RecyclerView
+
+    <GridView
         android:id="@+id/hGridview"
-        android:layout_height="100dp"
+        android:layout_height="match_parent"
         android:layout_width="match_parent"
         />
 

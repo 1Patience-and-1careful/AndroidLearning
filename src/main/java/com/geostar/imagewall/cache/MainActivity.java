@@ -1,4 +1,4 @@
-package com.geostar.imagewall;
+package com.geostar.imagewall.cache;
 
 import android.content.ContentResolver;
 import android.content.Context;
@@ -19,10 +19,10 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ImageView;
 
-import com.geostar.imagewall.cache.BitmapUtils;
-import com.geostar.imagewall.cache.DiskLruCache;
+import com.geostar.imagewall.R;
 
 import java.io.File;
+import java.lang.ref.WeakReference;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Locale;
@@ -65,8 +65,7 @@ public class MainActivity extends AppCompatActivity implements AbsListView.OnScr
 
             @Override
             protected void entryRemoved(boolean evicted, String key, Bitmap oldValue, Bitmap newValue) {
-                oldValue.recycle();
-                oldValue = null;
+//                oldValue.recycle();
                 Log.d(TAG,"entryRemoved : " + key);
                 super.entryRemoved(evicted, key, oldValue, newValue);
             }
@@ -102,11 +101,12 @@ public class MainActivity extends AppCompatActivity implements AbsListView.OnScr
     }
 
 
+
     public void loadBitmap(String imageFilePath, ImageView imageView) {
         final String imageKey = getImageFileKey(imageFilePath);
 
         final Bitmap bitmap = getBitmapFromMemCache(imageKey);
-        if (bitmap != null && !bitmap.isRecycled()) {
+        if (bitmap != null) {
             imageView.setImageBitmap(bitmap);
         } else {
             if(mReadPicWork.containsKey(imageKey)){
@@ -116,6 +116,8 @@ public class MainActivity extends AppCompatActivity implements AbsListView.OnScr
             BitmapWorkerTask task = new BitmapWorkerTask(imageView,imageFilePath);
             mReadPicWork.put(imageKey,task);
             task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+//            task.execute(imageFilePath);
+//            mWorkThreads.execute(new BitMapLoader(imageView,imageFilePath));
         }
     }
 
@@ -153,7 +155,8 @@ public class MainActivity extends AppCompatActivity implements AbsListView.OnScr
         @Override
         public void run() {
             final Bitmap bitmap = BitmapUtils.decodeSampledBitmapFromFile(
-                    mImagePath, getResources().getDimensionPixelOffset(R.dimen.image_width), getResources().getDimensionPixelOffset(R.dimen.image_height));
+                    mImagePath, getResources().getDimensionPixelOffset(R.dimen.image_width),
+                    getResources().getDimensionPixelOffset(R.dimen.image_height));
             addBitmapToMemoryCache(getImageFileKey(mImagePath),bitmap);
             mImageView.post(new Runnable() {
                 @Override
@@ -170,17 +173,17 @@ public class MainActivity extends AppCompatActivity implements AbsListView.OnScr
      */
     public class BitmapWorkerTask extends AsyncTask<String, Void, Bitmap> {
 
-        private ImageView mImageView;
+        private final WeakReference<ImageView> mImageView;
         private String imagePath;
 
         public BitmapWorkerTask(ImageView imageView,String imagePath) {
-            mImageView = imageView;
+            mImageView = new WeakReference<ImageView>(imageView);
             this.imagePath = imagePath;
         }
 
         @Override
         protected void onPostExecute(Bitmap bitmap) {
-            mImageView.setImageBitmap(bitmap);
+            mImageView.get().setImageBitmap(bitmap);
             super.onPostExecute(bitmap);
             mReadPicWork.remove(imagePath);
         }
