@@ -21,8 +21,8 @@ public class SolrQueryService {
     private SolrClient solrClient;
     private Class beamClasz;
 
-    private String mServiceUrl;
     private QueryResponse solrResponse;
+    private String mServiceUrl;
 
     /**
      * 构造函数
@@ -37,9 +37,9 @@ public class SolrQueryService {
 
     /**
      * 查询结果总数
-     * @param queryParams
-     * @return
-     * @throws Exception
+     * @param queryParams 查询参数
+     * @return 结果总数
+     * @throws Exception 查询失败
      */
     public long queryCount(String queryParams) throws Exception {
         QueryResponse response = querySolrResponse(makeSolrQuery(queryParams, 0, 10));
@@ -56,7 +56,7 @@ public class SolrQueryService {
      * @param rows 结果数
      * @return 查询结果列表 List<BeanClass>
      */
-    public List query(String queryParams, int start, int rows) throws Exception {
+    public List queryBeans(String queryParams, int start, int rows) throws Exception {
         QueryResponse response = querySolrResponse(makeSolrQuery(queryParams,start,rows));
         return response.getBeans(beamClasz);
     }
@@ -68,8 +68,27 @@ public class SolrQueryService {
      * @param rows 结果数
      * @return 查询结果列表 List<BeanClass>
      */
-    public QueryResponse queryResponse(String queryParams, int start, int rows) throws Exception {
+    public QueryResponse query(String queryParams, int start, int rows) throws Exception {
         return querySolrResponse(makeSolrQuery(queryParams,start,rows));
+    }
+
+    /**
+     * 查询结果
+     * @param queryParams 查询参数
+     * @return 查询结果列表 List<BeanClass>  结果数按服务器默认配置
+     */
+    public QueryResponse query(String queryParams) throws Exception {
+        return querySolrResponse(makeSolrQuery(queryParams,-1,-1));
+    }
+
+    /**
+     * 直接根据 SolrQuery 查询
+     * @param query throws Exception
+     * @return 查询结果列表 List<BeanClass>  结果数按服务器默认配置
+     * @throws Exception 查询失败
+     */
+    public QueryResponse query(SolrQuery query)throws Exception {
+        return querySolrResponse(query);
     }
 
     /**
@@ -86,8 +105,12 @@ public class SolrQueryService {
     @NonNull
     private SolrQuery makeSolrQuery(String queryParams, int start, int rows) {
         SolrQuery query = new SolrQuery(queryParams);
-        query.set("start",start);
-        query.set("rows",rows);
+        if(start >= 0){
+            query.set("start",start);
+        }
+        if(rows > 0) {
+            query.set("rows", rows);
+        }
         query.set("timeAllowed",30*1000);//设置timeout 毫秒
         return query;
     }

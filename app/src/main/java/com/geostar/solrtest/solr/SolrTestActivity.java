@@ -39,6 +39,8 @@ public class SolrTestActivity extends AppCompatActivity implements ItemFragment.
     ProgressDialog progressDialog;
     private EditText queryText;
 
+    private SolrQueryService mQueryService;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,16 +84,12 @@ public class SolrTestActivity extends AppCompatActivity implements ItemFragment.
      */
     @Override
     public Object call() throws Exception {
-        if(httpSolrClient == null) {
-            httpSolrClient = new HttpSolrClient(SOLR_BASE_URL, new DefaultHttpClient());
-//            httpSolrClient.setParser(new XMLResponseParser());
+        if(mQueryService == null) {
+            mQueryService = new SolrQueryService(SOLR_BASE_URL,ResultItem.class);
         }
         QueryResponse resp = null;
-        SolrQuery query = new SolrQuery(String.format("%s",queryText.getText().toString()));
-        query.set("start",0);
-        query.set("rows",10);
         try {
-            resp = httpSolrClient.query(query);
+            resp = mQueryService.query(queryText.getText().toString());
         } catch (SolrServerException e) {
             e.printStackTrace();
         }
