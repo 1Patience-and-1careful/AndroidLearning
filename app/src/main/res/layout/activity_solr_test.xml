@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_solr_test"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.geostar.solrtest.solr.SolrTestActivity">
+
+    <LinearLayout
+        android:id="@+id/ll_top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/et_input_keyword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Content:* AND TableName:A00GIS_FTPFILE"/>
+        <Button
+            android:id="@+id/btn_search_solr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="搜索"/>
+    </LinearLayout>
+
+
+    <FrameLayout
+        android:id="@+id/fl_fragment_stub"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/ll_top_bar">
+    </FrameLayout>
+
+
+
+</RelativeLayout>
