@@ -135,4 +135,5 @@ public class SolrTestActivity extends AppCompatActivity implements ItemFragment.
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         return super.onKeyDown(keyCode, event);
     }
+
 }
