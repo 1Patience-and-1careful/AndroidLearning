@@ -2,6 +2,9 @@ package com.geostar.solrtest.ftp;
 
 import android.util.Log;
 
+import com.geostar.solrtest.utils.RunnableUtils;
+
+import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPClientConfig;
 import org.apache.commons.net.ftp.FTPFile;
@@ -32,6 +35,7 @@ public class FTPDownUtils {
     private FTPClient ftp;
 
     private volatile boolean stop;
+    private FileOutputStream fileOutputStream;
 
 
     public interface FTPDownloadCallback{
@@ -46,31 +50,75 @@ public class FTPDownUtils {
 
     }
 
-    private void notifyStart(FTPDownloadCallback callback,long totalSize,long startSize){
+    private void notifyStart(final FTPDownloadCallback callback,final long totalSize,final long startSize){
         if(callback != null){
-            callback.onDownloadStart(totalSize,startSize);
+            RunnableUtils.executeOnMainThread(new Runnable() {
+                @Override
+                public void run() {
+                    callback.onDownloadStart(totalSize,startSize);
+                }
+            });
         }
     }
 
-    private void notifyError(FTPDownloadCallback callback,int errorCode){
+    private void notifyError(final  FTPDownloadCallback callback,final int errorCode){
         if(callback != null){
-            callback.onDownloadError(errorCode);
+            RunnableUtils.executeOnMainThread(new Runnable() {
+                @Override
+                public void run() {
+                    callback.onDownloadError(errorCode);
+                }
+            });
         }
     }
 
-    private void notifyUpdating(FTPDownloadCallback callback,long totalSize,long downloadSize){
+    private void notifyUpdating(final FTPDownloadCallback callback, final long totalSize, final long downloadSize){
         if(callback != null){
-            callback.onDownloading(totalSize,downloadSize);
+            RunnableUtils.executeOnMainThread(new Runnable() {
+                @Override
+                public void run() {
+                    callback.onDownloading(totalSize,downloadSize);
+                }
+            });
         }
     }
 
-    private void notifyFinish(FTPDownloadCallback callback,String filePath){
+    private void notifyFinish(final FTPDownloadCallback callback, final String filePath){
         if(callback != null){
-            callback.onDownloadFinished(filePath);
+            RunnableUtils.executeOnMainThread(new Runnable() {
+                @Override
+                public void run() {
+                    callback.onDownloadFinished(filePath);
+                }
+            });
         }
     }
 
+    /**
+     * FTP 下载
+     * @param filePath FTP 文件路径
+     * @param localFilePath 本地存储路径
+     * @param callback 回调
+     * @throws IOException
+     */
     public void downloadFile(String filePath, String localFilePath, final FTPDownloadCallback callback) throws IOException {
+        getFTPClicent(true);
+        try {
+            doRealDown(filePath, localFilePath, callback);
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw e;
+        }finally {
+            try {
+                getFTPClicent().disconnect();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            stop = false;
+        }
+    }
+
+    private void doRealDown(String filePath, String localFilePath, final FTPDownloadCallback callback) throws IOException {
         final Thread downTask = Thread.currentThread();
         connectFTP();
         loginToFTP();
@@ -110,41 +158,37 @@ public class FTPDownUtils {
             }
         }
         ftpClient.setRestartOffset(startOffset);
+        ftpClient.setBufferSize(calcBufferSize(ftpFileSize));
+        // 解决文件大小不一致问题
+        if( !ftpClient.setFileType(FTP.BINARY_FILE_TYPE)){
+            unify_outPutResult("Set BINARY_FILE_TYPE Failed!!!");
+        }
         judgeStopDownTask(downTask, ftpClient);
         notifyStart(callback,ftpFileSize,startOffset);
         ftpClient.setCopyStreamListener(new CopyStreamListener() {
-            long traned = 0;
-            long pre;
             @Override
-            public void bytesTransferred(CopyStreamEvent event) {
-            }
+            public void bytesTransferred(CopyStreamEvent event) {}
 
             @Override
             public void bytesTransferred(long totalBytesTransferred, int bytesTransferred, long streamSize) { //StreamSize 总是-1
-                judgeStopDownTask(downTask, ftpClient);
-                // 先看是否下載完畢
-//                if(totalBytesTransferred >= streamSize){
-//                    unify_outPutResult(String.format("下載完成：totalBytesTransferred:%d, bytesTransferred:%d , streamSize:%d",totalBytesTransferred,
-//                            bytesTransferred,streamSize));
-//                    notifyUpdating(callback,ftpFileSize,totalBytesTransferred);
-//                    return;
-//                }
-
-                // 每下載1% 更新進度
-                traned+=bytesTransferred;
-                if(traned/(float)streamSize >= 0.01f){
-                    unify_outPutResult(String.format("下載中：totalBytesTransferred:%d, bytesTransferred:%d , streamSize:%d",totalBytesTransferred,
-                            bytesTransferred,streamSize));
-                    traned = 0;
-                    notifyUpdating(callback,ftpFileSize,totalBytesTransferred);
+                try {
+                    if( judgeStopDownTask( downTask, ftpClient) ){
+                        return;
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    unify_outPutResult("停止服务连接失败");
+                }
+                if(stop){
+                    RunnableUtils.cancelUITask();
+                }
+                if(!stop) {
+                    notifyUpdating(callback, ftpFileSize, totalBytesTransferred);
                 }
             }
         });
-        boolean downloadResult = ftpClient.retrieveFile(filePath,new FileOutputStream(localFile));
-        if(stop){
-            stop = false;
-            return;
-        }
+        fileOutputStream = new FileOutputStream(localFile);
+        boolean downloadResult = ftpClient.retrieveFile(filePath, fileOutputStream);
         if(downloadResult){ // 如果下载成功，并且没有取消，则调用finish
             unify_outPutResult("下載成功");
             notifyUpdating(callback,ftpFileSize,ftpFileSize);
@@ -153,25 +197,43 @@ public class FTPDownUtils {
             unify_outPutResult("下載失敗");
             notifyError(callback, ERR_DOWNFILE_FAILED);
         }
+        getFTPClicent().logout();
     }
 
-    private void judgeStopDownTask(Thread downTask, FTPClient ftpClient) {
+    private int calcBufferSize(long ftpFileSize) {
+        if(ftpFileSize > (1<<30)){// > 1GB
+            return 20 * (1<<10);
+        }else if(ftpFileSize > (1<<20)){ // > 1M
+            return 10 * (1<<10);
+        }else if(ftpFileSize > (1<<10)){ // > 1KB
+            return 512;
+        }else if(ftpFileSize > (512)){
+            return 2<<5;
+        }
+        return 2;
+    }
+
+    private boolean judgeStopDownTask(Thread downTask, FTPClient ftpClient) throws IOException {
         if(downTask != null && downTask.isInterrupted()){
             stop = true;
-            try {
-                ftpClient.logout();
-                ftpClient.disconnect();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            tryToStopFileDown(ftpClient);
         }
         if(stop){
-            try {
-                ftpClient.logout();
-                ftpClient.disconnect();
-            } catch (IOException e) {
-                e.printStackTrace();
+            tryToStopFileDown(ftpClient);
+        }
+        return stop;
+    }
+
+    private void tryToStopFileDown(FTPClient ftpClient) throws IOException {
+        try {
+            if(fileOutputStream != null ){
+                fileOutputStream.close();
             }
+            ftpClient.logout();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+            ftpClient.disconnect();
         }
     }
 
@@ -218,7 +280,11 @@ public class FTPDownUtils {
     public static final String FTP_SERVER = "192.168.100.118";
 
     private FTPClient getFTPClicent(){
-        if(ftp == null){
+        return getFTPClicent(false);
+    }
+
+    private FTPClient getFTPClicent(boolean create){
+        if(create){
             ftp = new FTPClient();
             setFTPClient(ftp);
             // 如果系统设置错误也可能导致错误，如此处如果设置成NT ,则无法获取文件大小
@@ -226,6 +292,10 @@ public class FTPDownUtils {
             config.setDefaultDateFormatStr("yyyy-MM-dd");
             config.setServerLanguageCode("zh");
             ftp.configure(config);
+            return ftp;
+        }
+        if(ftp == null){
+            return getFTPClicent(true);
         }
         return ftp;
     }
@@ -235,7 +305,7 @@ public class FTPDownUtils {
         ftp.enterLocalPassiveMode();//
         // 保证数据传输期间连接不被关闭 http://commons.apache.org/proper/commons-net/javadocs/api-3.6/index.html
         ftp.setControlKeepAliveTimeout(300); //set timeout to 5 minutes
-        ftp.setSendDataSocketBufferSize(1024);
+        ftp.setBufferSize(4096);
         ftp.setControlEncoding("UTF-8"); // 编码一定要正确，不然无法定位到中文文件名
         try {
             ftp.setFileType(FTPClient.BINARY_FILE_TYPE);
@@ -246,6 +316,22 @@ public class FTPDownUtils {
 
     public void stop(boolean stop) {
         this.stop = stop;
+    }
+
+    public static final String parseErrorCode(int code) {
+        if (code == ERR_DOWNFILE_FAILED) {
+            return "下载文件过程中失败";
+        } else if (code == ERR_FILE_LOGIN_FAILED) {
+            return "无法登录到FTP服务器";
+        } else if (code == ERR_FILE_NOT_FOUND_ON_SERVER) {
+            return "档案文件不存在";
+        } else if (code == ERR_FTP_CANT_CONNECT_SERVER) {
+            return "无法连接到FTP服务器";
+        } else if (code == ERR_FTP_SERVER_REFUSED) {
+            return "服务器拒绝连接";
+        } else {
+            return "";
+        }
     }
 
 }

@@ -1,31 +1,40 @@
 package com.geostar.solrtest.ftp;
 
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.geostar.solrtest.R;
+import com.geostar.solrtest.utils.FileViewer;
 import com.geostar.solrtest.utils.RunnableUtils;
 
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPClientConfig;
 import org.apache.commons.net.ftp.FTPFile;
-import org.apache.commons.net.ftp.FTPHTTPClient;
-import org.apache.commons.net.io.CopyStreamAdapter;
 import org.apache.commons.net.io.CopyStreamEvent;
 import org.apache.commons.net.io.CopyStreamListener;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.concurrent.Callable;
+import java.util.concurrent.Future;
 
-public class FTPDownloadActivity extends AppCompatActivity implements View.OnClickListener {
+public class FTPDownloadActivity extends AppCompatActivity implements View.OnClickListener, FTPDownUtils.FTPDownloadCallback {
 
 
     private static final String TAG = "FTP";
 
     private FTPClient ftp;
+    ProgressDialog mDownProgress;
+
+    private Future mDownTask;
+    private FTPDownUtils ftpDownUtils;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +44,24 @@ public class FTPDownloadActivity extends AppCompatActivity implements View.OnCli
         findViewById(R.id.btn_login_ftp).setOnClickListener(this);
         findViewById(R.id.btn_download_file).setOnClickListener(this);
 
+        mDownProgress = createProgresDialog();
+        ftpDownUtils = new FTPDownUtils();
+    }
+
+    private ProgressDialog createProgresDialog() {
+        ProgressDialog downProgress = new ProgressDialog(this);
+        downProgress.setTitle("下载中");
+        downProgress.setMessage("....");
+        downProgress.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        downProgress.setButton(ProgressDialog.BUTTON_NEGATIVE, "取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                cancelDownTask();
+            }
+        });
+        downProgress.setCancelable(false);
+        downProgress.setCanceledOnTouchOutside(false);
+        return downProgress;
     }
 
     @Override
@@ -57,18 +84,29 @@ public class FTPDownloadActivity extends AppCompatActivity implements View.OnCli
             RunnableUtils.executeOnWorkThread(new Runnable() {
                 @Override
                 public void run() {
-                    String filePath = "/ROOT/广东省土规院后期工作计划.docx",localFilePath = "/sdcard/GeoMap/ftp_广东省土规院后期工作计划.docx";
+                    String fileName = "apache-solr-ref-guide-5.3.pdf";
+                    final String filePath = "ROOT/" + fileName;
+                    final String localFilePath = "/sdcard/GeoMap/ftp_" + fileName;
 //                    String filePath = "ROOT/196766172363653868.jpg",localFilePath = "/sdcard/ftp_196766172363653868.jpg";
-                    try {
-                        downloadFile(filePath,localFilePath);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                        unify_outPutResult("下載異常");
-                    }
+//                    cancelDownTask();
+                    mDownTask = RunnableUtils.submit(new Callable() {
+                        @Override
+                        public Object call() throws Exception {
+                            ftpDownUtils.downloadFile(filePath,localFilePath,FTPDownloadActivity.this);
+                            return null;
+                        }
+                    });
                 }
             });
         }else{
 
+        }
+    }
+
+    private void cancelDownTask() {
+        if(mDownTask != null && !mDownTask.isDone()){
+            boolean cancelResult = mDownTask.cancel(true);
+            Log.d(TAG,"任务取消结果：" + cancelResult );
         }
     }
 
@@ -188,4 +226,43 @@ public class FTPDownloadActivity extends AppCompatActivity implements View.OnCli
         }
     }
 
+
+    /**
+     * FTP 下载更新
+     * @param totalSize
+     * @param startSize
+     */
+    @Override
+    public void onDownloadStart(long totalSize, long startSize) {
+        unify_outPutResult("onDownloadStart " + startSize + " / " + totalSize );
+        updateProgress((int) totalSize, (int) startSize);
+    }
+
+    private void updateProgress(int totalSize, int startSize) {
+        if(!mDownProgress.isShowing()){
+            mDownProgress.show();
+        }
+        mDownProgress.setMax(totalSize);
+        mDownProgress.setProgress(startSize);
+    }
+
+    @Override
+    public void onDownloading(long fileTotalSize, long downedSize) {
+        updateProgress((int) fileTotalSize,(int) downedSize);
+        unify_outPutResult("onDownloading " + downedSize + " / " + fileTotalSize );
+    }
+
+    @Override
+    public void onDownloadFinished(String filePath) {
+        unify_outPutResult("onDownloadFinished");
+        FileViewer.viewFile(this,filePath);
+        mDownProgress.dismiss();
+    }
+
+    @Override
+    public void onDownloadError(int errorCode) {
+        unify_outPutResult("onDownloadError:" + FTPDownUtils.parseErrorCode(errorCode));
+        Toast.makeText(this,"下载错误:" + FTPDownUtils.parseErrorCode(errorCode),Toast.LENGTH_SHORT).show();
+        mDownProgress.dismiss();
+    }
 }

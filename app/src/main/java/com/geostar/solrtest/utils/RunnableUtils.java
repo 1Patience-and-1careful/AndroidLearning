@@ -17,7 +17,9 @@ import java.util.concurrent.Future;
 public class RunnableUtils {
 
     private static final ExecutorService EXECUTOR = Executors.newFixedThreadPool(6);
+    public static final int UI_MSG = 0x1024;
     private static UIHandler sUIHandler = new UIHandler(Looper.getMainLooper());
+
     /**
      * 在UI线程中执行一个Runnable
      * @param task 要执行的任务
@@ -66,6 +68,10 @@ public class RunnableUtils {
         });
     }
 
+    public static void cancelUITask(){
+        sUIHandler.removeMessages(UI_MSG);
+    }
+
 
     /**
      * 提交执行任务
@@ -97,6 +103,7 @@ public class RunnableUtils {
 
     private static void postToMainThread(Runnable runnable, int delay){
         Message msg = sUIHandler.obtainMessage();
+        msg.what = UI_MSG;
         msg.obj = runnable;
         msg.arg1 = delay;
         if(sUIHandler == null){
@@ -104,6 +111,4 @@ public class RunnableUtils {
         }
         sUIHandler.sendMessage(msg);
     }
-
-
 }
