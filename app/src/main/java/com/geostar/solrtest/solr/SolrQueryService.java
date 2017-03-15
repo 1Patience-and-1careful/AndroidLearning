@@ -2,8 +2,9 @@ package com.geostar.solrtest.solr;
 
 import android.support.annotation.NonNull;
 
+import org.apache.http.client.HttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.solr.client.solrj.SolrClient;
+import org.apache.http.params.CoreConnectionPNames;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
@@ -18,7 +19,9 @@ import java.util.List;
  */
 public class SolrQueryService {
 
-    private SolrClient solrClient;
+    //    public static final String SOLR_BASE_URL = "http://192.168.42.107:8080/solr/core0";
+    public static final String SOLR_BASE_URL = "http://192.168.31.46:8080/solr/core0";
+    private HttpSolrClient solrClient;
     private Class beamClasz;
 
     private QueryResponse solrResponse;
@@ -32,17 +35,26 @@ public class SolrQueryService {
     public SolrQueryService(String mServiceUrl, Class beanClass) {
         this.mServiceUrl = mServiceUrl;
         this.beamClasz = beanClass;
-        solrClient = new HttpSolrClient(mServiceUrl,new DefaultHttpClient());
+        HttpClient httpClient = new DefaultHttpClient();
+        // 设置连接timeout
+        httpClient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, 2000);
+        // 设置获取数据timeout
+        httpClient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, 2000);
+        solrClient = new HttpSolrClient(mServiceUrl, httpClient);
+
+        // SolrClient 自带的timeout设置方法无效，会引发异常
+//        solrClient.setConnectionTimeout(2000);
+//        solrClient.setSoTimeout(2000);
     }
 
     /**
      * 查询结果总数
-     * @param queryParams 查询参数
-     * @return 结果总数
-     * @throws Exception 查询失败
+     * @param queryParams
+     * @return
+     * @throws Exception
      */
     public long queryCount(String queryParams) throws Exception {
-        QueryResponse response = querySolrResponse(makeSolrQuery(queryParams, 0, 10));
+        QueryResponse response = querySolrResponse(makeSolrQuery(queryParams, 0, 1));
         if(response.getResults() == null){
             throw new Exception("查询失败");
         }
@@ -106,16 +118,31 @@ public class SolrQueryService {
     private SolrQuery makeSolrQuery(String queryParams, int start, int rows) {
         SolrQuery query = new SolrQuery(queryParams);
         if(start >= 0){
-            query.set("start",start);
+//            query.set("start",start);
+            query.setStart(start);
         }
         if(rows > 0) {
-            query.set("rows", rows);
+//            query.set("rows", rows);
+            query.setRows(rows);
         }
-        query.set("timeAllowed",30*1000);//设置timeout 毫秒
+//        query.set("timeAllowed",5*1000);//设置timeout 毫秒  如果时间过了还没有查询完毕，则先返回部分结果
+        query.setTimeAllowed(5000);
+        query.setHighlight(true).setHighlightSnippets(1); // 开启高亮，结果会在 highlighting返回
+        // TODO 移出去
+        query.setParam("hl.fl", QueryParamCreator.CONTENT); // 设置高亮字段
         return query;
     }
 
+    /**
+     * 统一的查询入口
+     * @param query
+     * @return
+     * @throws Exception
+     */
     private QueryResponse querySolrResponse(SolrQuery query) throws Exception {
+        if(enableDebug){
+            System.out.println("Solr:" + mServiceUrl + "  q=" + query.getQuery() + " start:" + query.get("start") + "; rows:" + query.get("rows"));
+        }
         try {
             solrResponse = solrClient.query(query);
         } catch (SolrServerException e) {
@@ -130,4 +157,5 @@ public class SolrQueryService {
         }
         return solrResponse;
     }
+    private boolean enableDebug = true;
 }

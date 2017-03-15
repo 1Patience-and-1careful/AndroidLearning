@@ -24,6 +24,8 @@ import java.util.ArrayList;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
 
+import static com.geostar.solrtest.solr.SolrQueryService.SOLR_BASE_URL;
+
 
 /**
  * Solr 搜索测试
@@ -31,7 +33,6 @@ import java.util.concurrent.Future;
 public class SolrTestActivity extends AppCompatActivity implements ItemFragment.OnListFragmentInteractionListener,
         View.OnClickListener,Callable {
 
-    public static final String SOLR_BASE_URL = "http://192.168.42.107:8080/solr/core0";
     private static final String TAG = "SolrTest";
     Future currQueryTask = null;
     private HttpSolrClient httpSolrClient;
@@ -89,7 +90,7 @@ public class SolrTestActivity extends AppCompatActivity implements ItemFragment.
         }
         QueryResponse resp = null;
         try {
-            resp = mQueryService.query(queryText.getText().toString());
+            resp = mQueryService.query(QueryParamCreator.createArchiveQuery(queryText.getText().toString()));
         } catch (SolrServerException e) {
             e.printStackTrace();
         }

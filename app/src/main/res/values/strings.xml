@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">非地图类功能测试</string>
+    <string name="connect">连接</string>
+    <string name="login_ftp">登录FTP</string>
+    <string name="download_file">下载文件</string>
+    <string name="ftp_demo_content">
+        FTP: 192.168.100.118 \n
+        FTP_PORT: 21(default) \n
+        UserName: file \n
+        Password: file \n
+    </string>
+    <string name="search_init_word">Content:* AND TableName:A00GIS_FTPFILE</string>
+    <string name="search_init_word2">*</string>
 </resources>

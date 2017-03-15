@@ -16,7 +16,9 @@
             android:id="@+id/et_input_keyword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Content:* AND TableName:A00GIS_FTPFILE"/>
+            android:minWidth="80dp"
+            android:padding="8dp"
+            android:text="@string/search_init_word2"/>
         <Button
             android:id="@+id/btn_search_solr"
             android:layout_width="wrap_content"

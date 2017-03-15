@@ -13,7 +13,7 @@ public class QueryParamCreator {
      * 内容字段
      * <br/>"Content":"{\"FILENAME\":\"091230QS2QF关于广东省第二次全国土地调查省级总结报告编写工作实施方案的请示 001.jpg\",\"FILEFULLPATH\":\"ROOT//成果数据//调查室//二次调查//二调报告//091230QS2QF关于广东省第二次全国土地调查省级总结报告编写工作实施方案的请示//091230QS2QF关于广东省第二次全国土地调查省级总结报告编写工作实施方案的请示 001.jpg\"}"
      */
-    private static final String CONTENT = "Content";
+    protected static final String CONTENT = "Content";
     /**
      * 存储档案数据的表
      */

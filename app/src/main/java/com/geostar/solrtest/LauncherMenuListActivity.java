@@ -9,6 +9,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
+import com.geostar.solrtest.ftp.FTPDownloadActivity;
 import com.geostar.solrtest.solr.SolrTestActivity;
 
 import java.util.ArrayList;
@@ -41,9 +42,8 @@ public class LauncherMenuListActivity extends Activity implements AdapterView.On
 
     private void setStartItems() {
         mActivities = new ArrayList<>();
-
         mActivities.add(makeActItem(SolrTestActivity.class, "Solr 服务测试 ", "连接Solr服务查询测试"));
-
+        mActivities.add(makeActItem(FTPDownloadActivity.class, "FTP 服务连接下载测试 ", "使用Apache 包连接FTP服务"));
     }
 
     private Map<String, Object> makeActItem(Class activity, String title, String decs) {
