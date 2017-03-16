@@ -14,6 +14,7 @@ import org.apache.commons.net.io.CopyStreamListener;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.RandomAccessFile;
 
 /**
  * FTP 下载工具
@@ -140,23 +141,24 @@ public class FTPDownUtils {
         long localFileSize = localFile.length();
 //        long localFileSize = Utils.getFileSize(localFile.getAbsolutePath());
         Log.d(TAG,"本地文件大小：" + localFileSize + "; FTP文件大小：" + ftpFileSize);
-        int dx = (int) Math.abs(localFileSize-ftpFileSize);
+        RandomAccessFile randomAccessFile = new RandomAccessFile(localFile,"rws");
         if(localFile.isFile()){
-            if( dx <= 2 ){
+            if( localFileSize == ftpFileSize ){ // 文件存在
                 notifyFinish(callback,localFilePath);
                 return;
-            }/*else if(localFileSize > ftpFileSize){
+            }else if(localFileSize > ftpFileSize){ // 文件比FTP上大
                 localFile.delete();
-            }*/else{
                 boolean deleteResult = localFile.delete();
                 if(deleteResult) {
                     localFile.createNewFile();
                 }
                 Log.d(TAG,"删除文件结果：" + deleteResult + "; localFilePath：" + localFilePath);
-//                startOffset = localFileSize;
-                startOffset = 0;
+            }else{ // 文件比服务器小
+                startOffset = localFileSize;
+                Log.d(TAG,"文件存在：开始下载大小" + localFileSize);
             }
         }
+        randomAccessFile.seek(startOffset);
         ftpClient.setRestartOffset(startOffset);
         ftpClient.setBufferSize(calcBufferSize(ftpFileSize));
         // 解决文件大小不一致问题
@@ -165,6 +167,7 @@ public class FTPDownUtils {
         }
         judgeStopDownTask(downTask, ftpClient);
         notifyStart(callback,ftpFileSize,startOffset);
+        final long startByteSize = startOffset;
         ftpClient.setCopyStreamListener(new CopyStreamListener() {
             @Override
             public void bytesTransferred(CopyStreamEvent event) {}
@@ -183,7 +186,7 @@ public class FTPDownUtils {
                     RunnableUtils.cancelUITask();
                 }
                 if(!stop) {
-                    notifyUpdating(callback, ftpFileSize, totalBytesTransferred);
+                    notifyUpdating(callback, ftpFileSize, totalBytesTransferred+startByteSize);
                 }
             }
         });
@@ -227,6 +230,7 @@ public class FTPDownUtils {
     private void tryToStopFileDown(FTPClient ftpClient) throws IOException {
         try {
             if(fileOutputStream != null ){
+                fileOutputStream.flush();
                 fileOutputStream.close();
             }
             ftpClient.logout();

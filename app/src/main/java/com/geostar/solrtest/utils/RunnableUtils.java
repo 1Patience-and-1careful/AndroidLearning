@@ -1,6 +1,7 @@
 package com.geostar.solrtest.utils;
 
 import android.os.Handler;
+import android.os.HandlerThread;
 import android.os.Looper;
 import android.os.Message;
 
@@ -88,27 +89,32 @@ public class RunnableUtils {
             super(looper);
         }
 
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            if(msg.obj != null){
-                if( msg.arg1 > 0 ){
-                    postDelayed((Runnable) msg.obj,msg.arg1);
-                }else {
-                    post((Runnable) msg.obj);
-                }
-            }
-        }
+//        @Override
+//        public void handleMessage(Message msg) {
+//            super.handleMessage(msg);
+//            if(msg.obj != null){
+//                if( msg.arg1 > 0 ){
+//                    postDelayed((Runnable) msg.obj,msg.arg1);
+//                }else {
+//                    post((Runnable) msg.obj);
+//                }
+//            }
+//        }
     }
 
     private static void postToMainThread(Runnable runnable, int delay){
-        Message msg = sUIHandler.obtainMessage();
-        msg.what = UI_MSG;
-        msg.obj = runnable;
-        msg.arg1 = delay;
+//        Message msg = sUIHandler.obtainMessage();
+//        msg.what = UI_MSG;
+//        msg.obj = runnable;
+//        msg.arg1 = delay;
         if(sUIHandler == null){
             sUIHandler = new UIHandler(Looper.getMainLooper());
         }
-        sUIHandler.sendMessage(msg);
+//        sUIHandler.sendMessage(msg);
+        if(delay > 0){
+            sUIHandler.postDelayed(runnable,delay);
+        }else{
+            sUIHandler.post(runnable);
+        }
     }
 }
