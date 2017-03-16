@@ -1,9 +1,9 @@
 package com.geostar.solrtest;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.util.ArrayMap;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -19,7 +19,7 @@ import java.util.Map;
 /**
  * Created by jianghanghang on 2017/2/10.
  */
-public class LauncherMenuListActivity extends Activity implements AdapterView.OnItemClickListener {
+public class LauncherMenuListActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
 
     private List<Map<String, Object>> mActivities;

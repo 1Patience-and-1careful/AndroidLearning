@@ -39,6 +39,8 @@ public class FTPDownloadActivity extends AppCompatActivity implements View.OnCli
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ftpdownload);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        getSupportActionBar().setHomeButtonEnabled(true);
 
         findViewById(R.id.btn_connect_ftp).setOnClickListener(this);
         findViewById(R.id.btn_login_ftp).setOnClickListener(this);
