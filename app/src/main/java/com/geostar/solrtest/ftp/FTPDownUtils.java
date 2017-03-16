@@ -11,9 +11,11 @@ import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.io.CopyStreamEvent;
 import org.apache.commons.net.io.CopyStreamListener;
 
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.RandomAccessFile;
 
 /**
@@ -190,7 +192,7 @@ public class FTPDownUtils {
                 }
             }
         });
-        fileOutputStream = new FileOutputStream(localFile);
+        fileOutputStream = new FileOutputStream(localFile,startOffset  > 0); // 使用append 方式写入
         boolean downloadResult = ftpClient.retrieveFile(filePath, fileOutputStream);
         if(downloadResult){ // 如果下载成功，并且没有取消，则调用finish
             unify_outPutResult("下載成功");
