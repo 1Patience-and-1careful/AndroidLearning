@@ -254,15 +254,18 @@ public class FTPDownloadActivity extends AppCompatActivity implements View.OnCli
         RunnableUtils.executeOnMainThread(new Runnable() {
             @Override
             public void run() {
+                if (!mDownProgress.isShowing() ) {
+                    mDownProgress.show();
+                }
                 updateProgress((int) totalSize, (int) startSize);
             }
         });
     }
 
     private void updateProgress(int totalSize, int startSize) {
-        if (!mDownProgress.isShowing()) {
-            mDownProgress.show();
-        }
+//        if (!mDownProgress.isShowing() ) {
+//            mDownProgress.show();
+//        }
         mDownProgress.setMax(totalSize);
         mDownProgress.setProgress(startSize);
     }
