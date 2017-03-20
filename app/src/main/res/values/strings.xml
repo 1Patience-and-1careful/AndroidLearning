@@ -12,4 +12,7 @@
     <string name="search_init_word">Content:* AND TableName:A00GIS_FTPFILE</string>
     <string name="search_init_word2">*</string>
     <string name="ftp_download_test">FTP下载测试</string>
+    <string name="get_admin_by_coordinate">通过坐标获取行政区</string>
+    <string name="get_excel_file_url">获取excel文件url</string>
+    <string name="url_init"><![CDATA[http://192.168.31.54/MainService.svc/GetStatExcelPathByTableInfo?tablename=T_Statistics_Template&Tablealias=%25E7%25BB%259F%25E8%25AE%25A1%25E8%25A1%25A8&objectIds=50%7C51%7C100]]></string>
 </resources>

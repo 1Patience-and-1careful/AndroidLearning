@@ -11,6 +11,7 @@ import android.widget.SimpleAdapter;
 
 import com.geostar.solrtest.ftp.FTPDownloadActivity;
 import com.geostar.solrtest.solr.SolrTestActivity;
+import com.geostar.solrtest.solr.request.TwoFuncTestActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +45,7 @@ public class LauncherMenuListActivity extends AppCompatActivity implements Adapt
         mActivities = new ArrayList<>();
         mActivities.add(makeActItem(SolrTestActivity.class, "Solr 服务测试 ", "连接Solr服务查询测试"));
         mActivities.add(makeActItem(FTPDownloadActivity.class, "FTP 服务连接下载测试 ", "使用Apache 包连接FTP服务"));
+        mActivities.add(makeActItem(TwoFuncTestActivity.class, "HTTP 接口测试 ", "测试两个HTTP接口\n 1. 通过坐标获取行政区划；2. 获取excel下载路径"));
     }
 
     private Map<String, Object> makeActItem(Class activity, String title, String decs) {
