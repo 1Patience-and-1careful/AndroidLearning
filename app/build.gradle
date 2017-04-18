@@ -26,6 +26,16 @@ dependencies {
     //http://commons.apache.org/proper/commons-net/
     compile 'commons-net:commons-net:3.3'
     compile 'com.google.android.gms:play-services-appindexing:8.4.0'
+
+    compile 'com.google.code.ksoap2-android:ksoap2-android:3.6.2'
+
+}
+
+//https://docs.gradle.org/current/dsl/org.gradle.api.artifacts.dsl.RepositoryHandler.html
+repositories {
+    maven {
+        url "https://oss.sonatype.org/content/repositories/ksoap2-android-releases/"
+    }
 }
 
 android {

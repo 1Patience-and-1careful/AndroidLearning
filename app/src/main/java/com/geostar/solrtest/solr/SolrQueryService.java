@@ -20,7 +20,7 @@ import java.util.List;
 public class SolrQueryService {
 
     //    public static final String SOLR_BASE_URL = "http://192.168.42.107:8080/solr/core0";
-    public static final String SOLR_BASE_URL = "http://192.168.31.46:8080/solr/core0";
+    public static final String SOLR_BASE_URL = "http://192.168.31.46:8080/solr/core1";
     private HttpSolrClient solrClient;
     private Class beamClasz;
 

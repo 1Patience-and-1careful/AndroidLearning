@@ -1,5 +1,7 @@
 package com.geostar.solrtest;
 
+import com.geostar.solrtest.soap.SoapRequest;
+
 import org.json.JSONObject;
 import org.junit.Test;
 
@@ -23,6 +25,12 @@ public class ExampleUnitTest {
         System.out.println(test + "\n" + test.replace("\\\\","/"));
         JSONObject jsonObject = new JSONObject("{\"RegionCode\":\"441800000000\",\"RegionName\":\"清远市\"}");
 //        System.out.println(jsonObject.getString("RegionCode"));
+    }
+
+
+    @Test
+    public void login2Soap(){
+        SoapRequest.checkLoginName("zhiqunshen","111111");
     }
 
 

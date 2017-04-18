@@ -1,0 +1,11 @@
+<v:Envelope xmlns:c="http://schemas.xmlsoap.org/soap/encoding/"
+    xmlns:d="http://www.w3.org/2001/XMLSchema" xmlns:i="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:v="http://schemas.xmlsoap.org/soap/envelope/">
+    <v:Header />
+    <v:Body>
+        <checkLoginName id="o0" xmlns="http://default.org/" c:root="1">
+            <loginName>admin</loginName>
+            <password>111111</password>
+        </checkLoginName>
+    </v:Body>
+</v:Envelope>
