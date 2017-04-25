@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_simple_view_group"
     android:layout_width="match_parent"
@@ -12,22 +12,22 @@
 
 
     <com.geostar.solrtest.android.view.SimpleViewGroup
-        android:layout_height="match_parent"
-        android:layout_width="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content">
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="实测文本1"/>
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="实测文本1xxxxxxxxxxxxxxxxxxxxxxxxx"/>
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:text="实测文本2"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="实测文本3"/>
+            android:text="实测文本333333333333333333333333333333"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -35,4 +35,4 @@
             android:text="实测文本4"/>
 
     </com.geostar.solrtest.android.view.SimpleViewGroup>
-</RelativeLayout>
+</FrameLayout>

@@ -7,8 +7,6 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.TextView;
 
 /**
  * 将所有子View 环形方式居中
@@ -37,21 +35,57 @@ public class SimpleViewGroup extends ViewGroup {
     }
 
     @Override
+    public LayoutParams generateLayoutParams(AttributeSet attrs) {
+        return super.generateLayoutParams(attrs);
+    }
+
+    @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        FrameLayout fl;
-        TextView textView;
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        // 获得它的父容器为它设置的测量模式和大小
+        int sizeWidth = MeasureSpec.getSize(widthMeasureSpec);
+        int sizeHeight = MeasureSpec.getSize(heightMeasureSpec);
+        int modeWidth = MeasureSpec.getMode(widthMeasureSpec); // 都是excat
+        int modeHeight = MeasureSpec.getMode(heightMeasureSpec);
+
         int count = getChildCount();
-        View child = null;
 
-        int cWidth,cHeight;
+        int[][] record = new int[4][2];
 
+        int childWidthMeasureSpec = 0;
+        int childHeightMeasureSpec = 0;
         for (int i = 0; i < count; i++) {
-            child = getChildAt(i);
-            child.getMeasuredWidth();
+            final View child = getChildAt(i);
+            if( child.getLayoutParams().width == LayoutParams.MATCH_PARENT ){
+                childWidthMeasureSpec = MeasureSpec.makeMeasureSpec(sizeWidth/2,MeasureSpec.EXACTLY);
+            }else if(child.getLayoutParams().width == LayoutParams.WRAP_CONTENT){
+                childWidthMeasureSpec = MeasureSpec.makeMeasureSpec(sizeWidth/2,MeasureSpec.AT_MOST);
+            }else{
+                childWidthMeasureSpec = MeasureSpec.makeMeasureSpec(child.getLayoutParams().width,MeasureSpec.EXACTLY);
+            }
+
+            if( child.getLayoutParams().height == LayoutParams.MATCH_PARENT ){
+                childHeightMeasureSpec = MeasureSpec.makeMeasureSpec(sizeHeight/2,MeasureSpec.EXACTLY);
+            }else if(child.getLayoutParams().height == LayoutParams.WRAP_CONTENT){
+                childHeightMeasureSpec = MeasureSpec.makeMeasureSpec(sizeHeight/2,MeasureSpec.AT_MOST);
+            }else{
+                childHeightMeasureSpec = MeasureSpec.makeMeasureSpec(child.getLayoutParams().height,MeasureSpec.EXACTLY);
+            }
+            child.measure(childWidthMeasureSpec,childHeightMeasureSpec);
+
+            int childHeight = child.getMeasuredHeight();
+            int childWidth = child.getMeasuredWidth();
+
+            record[i % 4][0] = Math.max(record[i % 4][0], childWidth);// 记录每个维度的最大值
+            record[i % 4][1] = Math.max(record[i % 4][1], childHeight);// 记录每个维度的最大值
         }
 
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        int maxWidth = Math.max(record[0][0] + record[1][0], record[2][0] + record[3][0]);
+        int maxHeight = Math.max(record[0][1] + record[2][1], record[1][1] + record[3][1]);
 
+//        setMeasuredDimension(maxWidth,maxHeight);
+        setMeasuredDimension(modeWidth == MeasureSpec.EXACTLY ? sizeWidth : maxWidth,
+                modeHeight == MeasureSpec.EXACTLY ? sizeHeight : maxHeight);
     }
 
     @Override
@@ -60,8 +94,8 @@ public class SimpleViewGroup extends ViewGroup {
         View childView = null;
 
         int fourChildCount = 0;
-        int centerX = (l + r) / 2;
-        int centerY = (t + b) / 2;
+        int centerX = (r-l) / 2;
+        int centerY = (b-t) / 2;
 
         for (int i = 0; i < count; i++) {
             Log.d(TAG, "onLayout " + i + " View");
@@ -73,16 +107,17 @@ public class SimpleViewGroup extends ViewGroup {
 
             final int width = childView.getMeasuredWidth();
             final int height = childView.getMeasuredHeight();
-            childView.getWidth();
 
+            int cW = Math.min(centerX, width);
+            int cH = Math.min(centerY, height);
             if (fourChildCount == 1) {// top left
-                childView.layout(centerX - width, centerY - height, centerX, centerY);
+                childView.layout(0, 0, cW, cH);
             } else if (fourChildCount == 2) {
-                childView.layout(centerX, t, r, centerY);
+                childView.layout(centerX, 0, centerX+cW, cH);
             } else if (fourChildCount == 3) {
-                childView.layout(centerX, centerY, r, b);
+                childView.layout(0, centerY, cW, centerY+cH);
             } else if (fourChildCount == 4) {
-                childView.layout(l, centerY, centerX, b);
+                childView.layout(centerX, centerY,centerX+cW, centerY+cH);
             }
         }
     }
