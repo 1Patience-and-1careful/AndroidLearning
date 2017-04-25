@@ -9,6 +9,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
+import com.geostar.solrtest.android.recyclerview.RecyclerViewHorizonActivity;
+import com.geostar.solrtest.android.view.SimpleViewGroupActivity;
 import com.geostar.solrtest.ftp.FTPDownloadActivity;
 import com.geostar.solrtest.solr.SolrTestActivity;
 import com.geostar.solrtest.solr.request.TwoFuncTestActivity;
@@ -46,6 +48,8 @@ public class LauncherMenuListActivity extends AppCompatActivity implements Adapt
         mActivities.add(makeActItem(SolrTestActivity.class, "Solr 服务测试 ", "连接Solr服务查询测试"));
         mActivities.add(makeActItem(FTPDownloadActivity.class, "FTP 服务连接下载测试 ", "使用Apache 包连接FTP服务"));
         mActivities.add(makeActItem(TwoFuncTestActivity.class, "HTTP 接口测试 ", "测试两个HTTP接口\n 1. 通过坐标获取行政区划；2. 获取excel下载路径"));
+        mActivities.add(makeActItem(RecyclerViewHorizonActivity.class, "RecyclerView 测试 ", "测试RecyvlerView 的水平布局\n "));
+        mActivities.add(makeActItem(SimpleViewGroupActivity.class, "ViewGroup 测试 ", "测试ViewGroup 自定义\n "));
     }
 
     private Map<String, Object> makeActItem(Class activity, String title, String decs) {
