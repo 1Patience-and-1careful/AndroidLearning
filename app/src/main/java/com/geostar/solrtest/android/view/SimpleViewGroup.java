@@ -56,6 +56,7 @@ public class SimpleViewGroup extends ViewGroup {
         int childHeightMeasureSpec = 0;
         for (int i = 0; i < count; i++) {
             final View child = getChildAt(i);
+            // 合成child 宽度测量参数
             if( child.getLayoutParams().width == LayoutParams.MATCH_PARENT ){
                 childWidthMeasureSpec = MeasureSpec.makeMeasureSpec(sizeWidth/2,MeasureSpec.EXACTLY);
             }else if(child.getLayoutParams().width == LayoutParams.WRAP_CONTENT){
@@ -64,6 +65,7 @@ public class SimpleViewGroup extends ViewGroup {
                 childWidthMeasureSpec = MeasureSpec.makeMeasureSpec(child.getLayoutParams().width,MeasureSpec.EXACTLY);
             }
 
+            // 合成child 高度测量参数
             if( child.getLayoutParams().height == LayoutParams.MATCH_PARENT ){
                 childHeightMeasureSpec = MeasureSpec.makeMeasureSpec(sizeHeight/2,MeasureSpec.EXACTLY);
             }else if(child.getLayoutParams().height == LayoutParams.WRAP_CONTENT){
@@ -83,7 +85,6 @@ public class SimpleViewGroup extends ViewGroup {
         int maxWidth = Math.max(record[0][0] + record[1][0], record[2][0] + record[3][0]);
         int maxHeight = Math.max(record[0][1] + record[2][1], record[1][1] + record[3][1]);
 
-//        setMeasuredDimension(maxWidth,maxHeight);
         setMeasuredDimension(modeWidth == MeasureSpec.EXACTLY ? sizeWidth : maxWidth,
                 modeHeight == MeasureSpec.EXACTLY ? sizeHeight : maxHeight);
     }
