@@ -22,7 +22,7 @@ import java.util.ArrayList;
 public class RecyclerViewHorizonActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
-    private LinearLayoutManager linearLayoutManager;
+    private RecyclerView.LayoutManager linearLayoutManager;
     private ArrayList<TestBean> mDatas = new ArrayList<>();
     private TestBeanAdapter mBeanAdapter;
 
@@ -32,16 +32,23 @@ public class RecyclerViewHorizonActivity extends AppCompatActivity {
         setContentView(R.layout.activity_recyclerview_horilzonal);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
 
-        linearLayoutManager = new LinearLayoutManager(this);
-        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-        linearLayoutManager.setSmoothScrollbarEnabled(false);
+        linearLayoutManager = createLayoutManager();
 
         recyclerView.setLayoutManager(linearLayoutManager);
-        for( int i =0; i<20; i++){
-            mDatas.add(new TestBean("武汉市武大吉奥信息技术有限公司第 " + i  + " 分部"));
+        for (int i = 0; i < 20; i++) {
+            mDatas.add(new TestBean("武汉市武大吉奥信息技术有限公司第 " + i + " 分部"));
         }
         mBeanAdapter = new TestBeanAdapter();
         recyclerView.setAdapter(mBeanAdapter);
+    }
+
+    private RecyclerView.LayoutManager createLayoutManager() {
+        SimpleLinearLayoutManager layoutManager = new SimpleLinearLayoutManager(this);
+        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        layoutManager.setSmoothScrollbarEnabled(false);
+
+//        SimpleHorizLayoutManager  layoutManager = new SimpleHorizLayoutManager(this);
+        return layoutManager;
     }
 
     /**

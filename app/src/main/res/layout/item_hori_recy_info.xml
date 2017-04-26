@@ -11,8 +11,8 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:layout_marginTop="8dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
         android:background="@drawable/main_bottom_bg"
         android:orientation="vertical"
@@ -140,14 +140,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="11dp"
+        android:layout_marginRight="4dp"
         android:layout_marginTop="24dp">
 
         <ImageView
             android:id="@+id/iv_check_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/common_ic_googleplayservices" />
+            android:src="@drawable/label_blue" />
 
         <TextView
             android:id="@+id/tv_check_status"
@@ -156,8 +156,8 @@
             android:layout_gravity="center"
             android:layout_marginBottom="2dp"
             android:gravity="center"
-            android:text="未通过"
-            android:textColor="@color/colorAccent"
+            android:text="待审核"
+            android:textColor="#ffffff"
             android:textSize="11dp" />
     </FrameLayout>
 
