@@ -1,11 +1,13 @@
 package com.geostar.solrtest;
 
-import com.geostar.solrtest.soap.SoapRequest;
+import com.geostar.solrtest.soap.SoapReqManager;
+import com.geostar.solrtest.soap.login.ActionGetSupportCity;
+import com.geostar.solrtest.utils.TestLogUtils;
 
-import org.json.JSONObject;
 import org.junit.Test;
+import org.ksoap2.serialization.SoapSerializationEnvelope;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -22,15 +24,31 @@ public class ExampleUnitTest {
     @Test
     public void addition_StringReplace() throws Exception {
         String test = "temp\\\\hello.text";
-        System.out.println(test + "\n" + test.replace("\\\\","/"));
-        JSONObject jsonObject = new JSONObject("{\"RegionCode\":\"441800000000\",\"RegionName\":\"清远市\"}");
-//        System.out.println(jsonObject.getString("RegionCode"));
+        System.out.println(test + "\n" + test.replace("\\\\", "/"));
     }
 
 
+    String url = "http://www.webxml.com.cn/WebServices/WeatherWebService.asmx";
     @Test
-    public void login2Soap(){
-        SoapRequest.checkLoginName("zhiqunshen","111111");
+    public void login2Soap() {
+        final SoapReqManager reqManager = new SoapReqManager(url, SoapSerializationEnvelope.VER12);
+        reqManager.setDoNet(false);
+        reqManager.doRequest(new ActionGetSupportCity("ALL"), new SoapReqManager.RequestCallBack() {
+            @Override
+            public void onSuccess(Object result) {
+                TestLogUtils.d(result.toString());
+            }
+
+            @Override
+            public void onFailed() {
+                TestLogUtils.d("onFailed");
+            }
+
+            @Override
+            public void onError(Exception e) {
+                TestLogUtils.d("onError");
+            }
+        }, false);
     }
 
 

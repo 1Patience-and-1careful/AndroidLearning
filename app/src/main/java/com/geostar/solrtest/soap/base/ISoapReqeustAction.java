@@ -3,7 +3,8 @@ package com.geostar.solrtest.soap.base;
 import org.ksoap2.serialization.SoapObject;
 
 /**
- * Created by jianghanghang on 2017/4/18.
+ * 封装Soap 各个接口的请求参数
+ * <br/>Created by hanlyjiang on 2017/4/18.
  */
 
 public interface ISoapReqeustAction<T> extends ISoapResponseHandler<T> {
