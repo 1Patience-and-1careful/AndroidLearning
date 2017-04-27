@@ -6,6 +6,7 @@ import com.geostar.solrtest.soap.base.ABaseSoapAction;
 import org.ksoap2.serialization.SoapObject;
 
 /**
+ * http://www.webxml.com.cn/zh_cn/weather_icon.aspx
  * Created by hanlyjiang on 2017/4/27.
  */
 public class ActionGetSupportCity extends ABaseSoapAction<String> {
