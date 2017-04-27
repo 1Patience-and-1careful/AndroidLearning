@@ -24,6 +24,11 @@ public class ActionGetSupportCity extends ABaseSoapAction<String> {
 
     @Override
     public String getMethodName() {
+        return "getSupportCity";
+    }
+
+    @Override
+    public String getSoapAction() {
         return "http://WebXml.com.cn/getSupportCity";
     }
 
@@ -31,4 +36,28 @@ public class ActionGetSupportCity extends ABaseSoapAction<String> {
     public String parseResult(Object obj) throws SoapException {
         return obj.toString();
     }
+
+    /*
+    <v:Envelope
+	xmlns:i="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:d="http://www.w3.org/2001/XMLSchema"
+	xmlns:c="http://www.w3.org/2003/05/soap-encoding"
+	xmlns:v="http://www.w3.org/2003/05/soap-envelope">
+	<v:Header />
+	<v:Body>
+		<getSupportCity xmlns="http://WebXml.com.cn/" id="o0" c:root="1">
+			<byProvinceName>ALL</byProvinceName>
+		</getSupportCity>
+	</v:Body>
+    </v:Envelope>
+     */
+
+    /*
+
+    WSDL
+    http://www.webxml.com.cn/Webservices/WeatherWebService.asmx?WSDL
+
+    接口说明：
+    http://www.webxml.com.cn/Webservices/WeatherWebService.asmx?op=getSupportCity
+     */
 }

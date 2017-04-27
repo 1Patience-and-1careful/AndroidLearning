@@ -12,6 +12,7 @@ package com.geostar.solrtest.soap.base;
  */
 public abstract class ABaseSoapAction<R> implements ISoapReqeustAction<R> {
 
+
     @Override
     public String getSoapAction() {
         return "";

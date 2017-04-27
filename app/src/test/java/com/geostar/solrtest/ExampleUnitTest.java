@@ -31,8 +31,8 @@ public class ExampleUnitTest {
     String url = "http://www.webxml.com.cn/WebServices/WeatherWebService.asmx";
     @Test
     public void login2Soap() {
-        final SoapReqManager reqManager = new SoapReqManager(url, SoapSerializationEnvelope.VER12);
-        reqManager.setDoNet(false);
+        final SoapReqManager reqManager = new SoapReqManager(url, SoapSerializationEnvelope.VER12,"http://WebXml.com.cn/");
+        reqManager.setDoNet(true);
         reqManager.doRequest(new ActionGetSupportCity("ALL"), new SoapReqManager.RequestCallBack() {
             @Override
             public void onSuccess(Object result) {

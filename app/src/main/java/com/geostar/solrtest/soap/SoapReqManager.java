@@ -29,23 +29,19 @@ public class SoapReqManager {
     private int version = SoapSerializationEnvelope.VER11;
     private boolean dotNet;
 
-    public SoapReqManager() {
-        url = "http://www.webxml.com.cn/WebServices/WeatherWebService.asmx";
-        namespace = "http://ws.com/";
-    }
-
-    public SoapReqManager(String url) {
+    /**
+     * 服务地址
+     * @param url 服务url地址 查看Wsdl 的 wsdl:service 标签段
+     * @param ver 请求使用的 soap 版本，有的服务器支持多个版本  查看wsdl 开始标签中 xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+     * @param namespace 命名空间 必须正确设置  wsdl 中的 wsdl 开始标签中  targetNamespace="http://WebXml.com.cn/
+     */
+    public SoapReqManager(String url, int ver, String namespace) {
         this.url = url;
-        namespace = "http://default.org/";
-    }
-
-    public SoapReqManager(String url, int ver) {
-        this.url = url;
-        namespace = "http://default.org/";
+        this.namespace = namespace;
         this.version = ver;
     }
 
-    public void setDoNet(boolean doNet){
+    public void setDoNet(boolean doNet) {
         this.dotNet = doNet;
     }
 
