@@ -17,18 +17,19 @@ dependencies {
         // HTTPCORE 和 httpclient-android 有冲突
         exclude group: 'org.apache.httpcomponents', module: 'httpcore'
     }
-    compile 'org.apache.httpcomponents:httpclient-android:4.3.5'
     compile 'com.android.support:support-v4:' + rootProject.ext.supportLibVersion
     compile 'com.android.support:appcompat-v7:' + rootProject.ext.supportLibVersion
     compile 'com.android.support:recyclerview-v7:' + rootProject.ext.supportLibVersion
     testCompile 'junit:junit:' + rootProject.ext.junitVersion
 
     //http://commons.apache.org/proper/commons-net/
+
+
+    compile 'org.apache.httpcomponents:httpclient-android:4.3.5'
     compile 'commons-net:commons-net:3.3'
     compile 'com.google.android.gms:play-services-appindexing:8.4.0'
-
     compile 'com.google.code.ksoap2-android:ksoap2-android:3.6.2'
-
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
 }
 
 //https://docs.gradle.org/current/dsl/org.gradle.api.artifacts.dsl.RepositoryHandler.html
@@ -51,12 +52,12 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
 
         debug {
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }

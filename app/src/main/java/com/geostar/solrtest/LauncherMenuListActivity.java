@@ -50,6 +50,7 @@ public class LauncherMenuListActivity extends AppCompatActivity implements Adapt
         mActivities.add(makeActItem(TwoFuncTestActivity.class, "HTTP 接口测试 ", "测试两个HTTP接口\n 1. 通过坐标获取行政区划；2. 获取excel下载路径"));
         mActivities.add(makeActItem(RecyclerViewHorizonActivity.class, "RecyclerView 测试 ", "测试RecyvlerView 的水平布局\n "));
         mActivities.add(makeActItem(SimpleViewGroupActivity.class, "ViewGroup 测试 ", "测试ViewGroup 自定义\n "));
+        mActivities.add(makeActItem(SimpleViewGroupActivity.class, "Intent 测试 ", "测试Intent 4.4 打开文件\n "));
     }
 
     private Map<String, Object> makeActItem(Class activity, String title, String decs) {

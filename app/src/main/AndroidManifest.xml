@@ -55,7 +55,8 @@
         <activity
             android:name=".android.recyclerview.RecyclerViewHorizonActivity"
             android:theme="@style/AppTheme" />
-        <activity android:name=".android.view.SimpleViewGroupActivity"></activity>
+        <activity android:name=".android.view.SimpleViewGroupActivity" />
+        <activity android:name=".IntentTestActivity"></activity>
     </application>
 
 </manifest>
