@@ -10,6 +10,7 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
 import com.geostar.solrtest.android.recyclerview.RecyclerViewHorizonActivity;
+import com.geostar.solrtest.android.view.MainDividerActivity;
 import com.geostar.solrtest.android.view.SimpleViewGroupActivity;
 import com.geostar.solrtest.ftp.FTPDownloadActivity;
 import com.geostar.solrtest.solr.SolrTestActivity;
@@ -51,6 +52,7 @@ public class LauncherMenuListActivity extends AppCompatActivity implements Adapt
         mActivities.add(makeActItem(RecyclerViewHorizonActivity.class, "RecyclerView 测试 ", "测试RecyvlerView 的水平布局\n "));
         mActivities.add(makeActItem(SimpleViewGroupActivity.class, "ViewGroup 测试 ", "测试ViewGroup 自定义\n "));
         mActivities.add(makeActItem(SimpleViewGroupActivity.class, "Intent 测试 ", "测试Intent 4.4 打开文件\n "));
+        mActivities.add(makeActItem(MainDividerActivity.class, "自定义View 测试 ", "自定义分割线\n "));
     }
 
     private Map<String, Object> makeActItem(Class activity, String title, String decs) {

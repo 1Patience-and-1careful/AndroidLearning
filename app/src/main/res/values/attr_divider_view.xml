@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="DividerView">
+        <attr name="orientation" format="enum">
+            <enum name="horizontal" value="0" />
+            <enum name="vertical" value="1" />
+        </attr>
+        <attr name="divide_color" format="color" />
+        <attr name="size" format="dimension" />
+        <attr name="roundStart" format="boolean" />
+    </declare-styleable>
+</resources>
