@@ -179,11 +179,16 @@ public class DividerView extends View {
         if (orientation == LinearLayout.HORIZONTAL) {
             padStart = getPaddingLeft();
             padEnd = getPaddingRight();
+            // center
             canvas.drawLine(delta + padStart, height / 2, width - padEnd - delta, height / 2, viewPaint);
+            // center_horizontal | left
+//            canvas.drawLine(delta + padStart, height / 2 + getPaddingTop(), width - padEnd - delta, height / 2 + getPaddingTop(), viewPaint);
         } else if (orientation == LinearLayout.VERTICAL) {
             padStart = getPaddingTop();
             padEnd = getPaddingBottom();
             canvas.drawLine(width / 2, delta + padStart, width / 2, height - padEnd - delta, viewPaint);
+
+//            canvas.drawLine(width / 2 + getPaddingLeft(), delta + padStart, width / 2 + getPaddingLeft(), height - padEnd - delta , viewPaint);
         }
     }
 
