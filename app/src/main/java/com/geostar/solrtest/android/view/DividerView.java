@@ -70,13 +70,21 @@ public class DividerView extends View {
     }
 
     private void init(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        initViewPaint();
+
+        if (attrs == null) {
+            return;
+        }
         TypedArray a = getResources().obtainAttributes(attrs, R.styleable.DividerView);
+        if (a == null) {
+            return;
+        }
         color = a.getColor(R.styleable.DividerView_divide_color, color);
         size = a.getDimensionPixelSize(R.styleable.DividerView_size, 8);
         orientation = a.getInt(R.styleable.DividerView_orientation, LinearLayout.HORIZONTAL);
         roundStartEnd = a.getBoolean(R.styleable.DividerView_roundStart, false);
         a.recycle();
-        initViewPaint();
+
     }
 
 
@@ -151,6 +159,7 @@ public class DividerView extends View {
             lineWidth = width;
         }
         viewPaint.setStrokeWidth(lineWidth);
+        viewPaint.setColor(color);
 
         int delta = 0;
         if (roundStartEnd) {
@@ -178,5 +187,40 @@ public class DividerView extends View {
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
+    }
+
+    public int getColor() {
+        return color;
+    }
+
+    public void setColor(int color) {
+        this.color = color;
+    }
+
+    public int getOrientation() {
+        return orientation;
+    }
+
+    public void setOrientation(int orientation) {
+        this.orientation = orientation;
+        invalidate();
+    }
+
+    public int getSize() {
+        return size;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
+        invalidate();
+    }
+
+    public boolean isRoundStartEnd() {
+        return roundStartEnd;
+    }
+
+    public void setRoundStartEnd(boolean roundStartEnd) {
+        this.roundStartEnd = roundStartEnd;
+        invalidate();
     }
 }
