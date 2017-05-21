@@ -2,33 +2,43 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootview"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:id="@+id/rootview"
     tools:context="com.geostar.solrtest.android.view.MainDividerActivity">
 
     <com.geostar.solrtest.android.view.DividerView xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        app:orientation="horizontal"
-        app:divide_color="@color/colorAccent"
-        app:roundStart="true"
-        app:size="16dp"
         android:padding="10dp"
-        />
+        app:divide_color="@color/colorAccent"
+        app:orientation="horizontal"
+        app:roundStart="true"
+        app:size="16dp" />
+
+    <com.geostar.solrtest.android.view.DividerView xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:layout_marginTop="20dp"
+        android:paddingTop="15dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="10dp"
+        app:divide_color="@color/colorAccent"
+        app:orientation="horizontal"
+        app:roundStart="true"
+        app:size="8dp" />
 
     <com.geostar.solrtest.android.view.DividerView xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        app:orientation="vertical"
-        app:divide_color="@color/colorAccent"
-        app:size="2dp"
-        android:padding="10dp"
-        app:roundStart="true"
         android:layout_gravity="center_horizontal"
-        />
+        android:layout_marginTop="20dp"
+        android:padding="10dp"
+        app:divide_color="@color/colorAccent"
+        app:orientation="vertical"
+        app:roundStart="true"
+        app:size="2dp" />
 
 </LinearLayout>
