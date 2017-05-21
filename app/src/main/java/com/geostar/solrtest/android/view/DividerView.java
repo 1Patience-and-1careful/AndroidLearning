@@ -108,27 +108,30 @@ public class DividerView extends View {
                 width = size;
             }
 
-            if (heightMode == MeasureSpec.EXACTLY || heightMode == MeasureSpec.AT_MOST) {
-                height = measureHeight > size ? size : measureHeight;
-            } else {
-                height = size;
+            if (heightMode == MeasureSpec.EXACTLY) {
+                height = measureHeight;
+            } else {//|| heightMode == MeasureSpec.AT_MOST wrap_content
+                height = size + getPaddingTop() + getPaddingBottom();
             }
 
             setMeasuredDimension(width, height);
             return;
         }
         if (orientation == LinearLayout.VERTICAL) {
-            if (heightMode == MeasureSpec.EXACTLY || heightMode == MeasureSpec.AT_MOST) {
+//            height = measureHeight;
+            if (heightMode == MeasureSpec.EXACTLY) { // Match_parent 或者指定大小
                 // Parent provide a exactly value for me
                 height = measureHeight;
             } else if (heightMode == MeasureSpec.UNSPECIFIED) {
-                height = size;
+                height = measureHeight + getPaddingTop() + getPaddingBottom();
+            } else if (heightMode == MeasureSpec.AT_MOST) { // wrap_content
+                height = measureHeight /*+ getPaddingTop() + getPaddingBottom()*/;
             }
 
-            if (widthMode == MeasureSpec.EXACTLY || widthMode == MeasureSpec.AT_MOST) {
-                width = measureHeight > size ? size : measureWidth;
+            if (widthMode == MeasureSpec.EXACTLY) {
+                width = measureHeight;
             } else {
-                width = size;
+                width = size + getPaddingLeft() + getPaddingRight();
             }
 
             setMeasuredDimension(width, height);
@@ -153,11 +156,11 @@ public class DividerView extends View {
         int width = getMeasuredWidth();
         int height = getMeasuredHeight();
 
-        if (orientation == LinearLayout.HORIZONTAL) {
-            lineWidth = height;
-        } else if (orientation == LinearLayout.VERTICAL) {
-            lineWidth = width;
-        }
+//        if (orientation == LinearLayout.HORIZONTAL) {
+//            lineWidth = height;
+//        } else if (orientation == LinearLayout.VERTICAL) {
+//            lineWidth = width;
+//        }
         viewPaint.setStrokeWidth(lineWidth);
         viewPaint.setColor(color);
 
@@ -172,7 +175,7 @@ public class DividerView extends View {
 
         int padStart = 0;
         int padEnd = 0;
-        canvas.restore();
+//        canvas.restore();
         if (orientation == LinearLayout.HORIZONTAL) {
             padStart = getPaddingLeft();
             padEnd = getPaddingRight();

@@ -16,13 +16,14 @@
         app:divide_color="@color/colorAccent"
         app:roundStart="true"
         app:size="16dp"
+        android:padding="10dp"
         />
 
     <com.geostar.solrtest.android.view.DividerView xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        app:orientation="horizontal"
+        app:orientation="vertical"
         app:divide_color="@color/colorAccent"
         app:size="2dp"
         android:padding="10dp"
