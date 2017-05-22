@@ -1,0 +1,32 @@
+package com.geostar.solrtest.android.listview;
+
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+
+import com.geostar.solrtest.R;
+
+public class DeptmentActivity extends AppCompatActivity {
+
+    private DeptMentFragment deptMentFragment;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_deptment);
+        deptMentFragment = new DeptMentFragment();
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.fl_fragment_stub, deptMentFragment)
+                .commit();
+
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        if(deptMentFragment.onBackPressed()){
+            return ;
+        }
+        super.onBackPressed();
+
+    }
+}

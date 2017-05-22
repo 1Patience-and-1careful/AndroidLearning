@@ -9,6 +9,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
+import com.geostar.solrtest.android.listview.DeptmentActivity;
+import com.geostar.solrtest.android.listview.ExpandableListActivity;
 import com.geostar.solrtest.android.recyclerview.RecyclerViewHorizonActivity;
 import com.geostar.solrtest.android.view.MainDividerActivity;
 import com.geostar.solrtest.android.view.SimpleViewGroupActivity;
@@ -53,6 +55,8 @@ public class LauncherMenuListActivity extends AppCompatActivity implements Adapt
         mActivities.add(makeActItem(SimpleViewGroupActivity.class, "ViewGroup 测试 ", "测试ViewGroup 自定义\n "));
         mActivities.add(makeActItem(SimpleViewGroupActivity.class, "Intent 测试 ", "测试Intent 4.4 打开文件\n "));
         mActivities.add(makeActItem(MainDividerActivity.class, "自定义View 测试 ", "自定义分割线\n "));
+        mActivities.add(makeActItem(ExpandableListActivity.class, "自定义 Expandable View 测试 ", "Expandables\n "));
+        mActivities.add(makeActItem(DeptmentActivity.class, "组织结构 测试 ", "组织结构\n "));
     }
 
     private Map<String, Object> makeActItem(Class activity, String title, String decs) {

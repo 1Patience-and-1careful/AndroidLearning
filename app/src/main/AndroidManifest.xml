@@ -57,7 +57,9 @@
             android:theme="@style/AppTheme" />
         <activity android:name=".android.view.SimpleViewGroupActivity" />
         <activity android:name=".IntentTestActivity" />
-        <activity android:name=".android.view.MainDividerActivity"></activity>
+        <activity android:name=".android.view.MainDividerActivity" />
+        <activity android:name=".android.listview.ExpandableListActivity" />
+        <activity android:name=".android.listview.DeptmentActivity"></activity>
     </application>
 
 </manifest>
