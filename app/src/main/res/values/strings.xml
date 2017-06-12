@@ -15,4 +15,17 @@
     <string name="get_admin_by_coordinate">通过坐标获取行政区</string>
     <string name="get_excel_file_url">获取excel文件url</string>
     <string name="url_init"><![CDATA[http://192.168.31.54/MainService.svc/GetStatExcelPathByTableInfo?tablename=T_Statistics_Template&Tablealias=%25E7%25BB%259F%25E8%25AE%25A1%25E8%25A1%25A8&objectIds=50%7C51%7C100]]></string>
+    <string name="test_str">
+        \n 据朝中社28日报道，金正恩参观了朝鲜国防科
+        \n 学院新研制的防空导弹系统的试射活动。
+        \n 报道称，金正恩对黄炳誓等随行将领表示，
+        \n 反导系统的探测能力大大提升，命中率也提高，
+        \n 完全修补了去年试射时出现的一系列缺陷，评价合格。
+        \n 金正恩曾于去年4月参观新型防空导弹的首次试射活动。
+        \n 英国路透社28日报道称，金正恩在试验结束后下令，
+        \n 要求大规模生产该型武器并且在全国范围内部署。
+        \n 不过，《劳动新闻》并没有对武器的确切性能以
+        \n 及试验时间进行说明。韩联社分析称，
+        \n 鉴于金正恩公开活动的消息一般次日
+        \n 见诸朝鲜报端，试射时间应该是27日。</string>
 </resources>

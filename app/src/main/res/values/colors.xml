@@ -9,4 +9,18 @@
     <!-- 灰度一级文本颜色 -->
     <color name="textSecondary">#666666</color>
     <color name="divider_color">#cccccc</color>
+    <color name="common_page_background">#efefef</color>
+
+    <integer-array name="color_bar">
+        <item >0xffa3d39c</item>
+        <item >0xff7da7d9</item>
+        <item >0xFF00FF00</item>
+        <item >0xFF0000FF</item>
+        <item >0xFFFFFF00</item>
+        <item >0xFFFF00FF</item>
+        <item >0xFF00FFFF</item>
+        <item >0xFFCCCCCC</item>
+        <item >0xFF888888</item>
+    </integer-array>
+
 </resources>

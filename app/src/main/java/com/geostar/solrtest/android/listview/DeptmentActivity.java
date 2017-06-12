@@ -4,16 +4,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.geostar.solrtest.R;
+import com.geostar.solrtest.android.listview.contact.DeparMentFragment;
 
 public class DeptmentActivity extends AppCompatActivity {
 
-    private DeptMentFragment deptMentFragment;
+    private DeparMentFragment deptMentFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_deptment);
-        deptMentFragment = new DeptMentFragment();
+        deptMentFragment = new DeparMentFragment();
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.fl_fragment_stub, deptMentFragment)
                 .commit();

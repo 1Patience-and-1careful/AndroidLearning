@@ -1,4 +1,4 @@
-package com.geostar.solrtest.android.listview;
+package com.geostar.solrtest.android.listview.contact;
 
 import com.geostar.solrtest.android.listview.deptment.Deptment;
 import com.geostar.solrtest.android.listview.deptment.User;
@@ -10,7 +10,7 @@ import com.geostar.solrtest.android.listview.deptment.User;
  * @version 1.0
  */
 
-public class DeptUnqData {
+public class DataWrapper {
 
     public static final int TYPE_DEPT = 0;
     public static final int TYPE_USER = 1;
@@ -19,12 +19,12 @@ public class DeptUnqData {
 
     private int type;
 
-    public DeptUnqData(Deptment data) {
+    public DataWrapper(Deptment data) {
         this.data = data;
         type = TYPE_DEPT;
     }
 
-    public DeptUnqData(User data) {
+    public DataWrapper(User data) {
         this.data = data;
         type = TYPE_USER;
     }

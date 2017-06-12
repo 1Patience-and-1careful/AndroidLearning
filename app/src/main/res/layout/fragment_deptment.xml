@@ -2,20 +2,21 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/common_page_background"
     android:orientation="vertical">
 
     <!--  指示条 -->
-    <LinearLayout
-        android:id="@+id/ll_indicator_bar"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerview_indicatorbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" />
+        android:background="@drawable/main_bottom_bg_selector"
+        android:padding="10dp"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="10dp" />
-
 
 </LinearLayout>
