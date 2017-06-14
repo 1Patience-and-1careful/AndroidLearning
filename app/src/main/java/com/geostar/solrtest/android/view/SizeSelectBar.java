@@ -86,8 +86,6 @@ public class SizeSelectBar extends BaseCustomView {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.DONUT) {
             ViewConfiguration conf = ViewConfiguration.get(getContext());
-//            mMinimumVelocity = conf.getScaledMinimumFlingVelocity();
-//            mMaximumVelocity = conf.getScaledMaximumFlingVelocity();
             mTouchSlop = conf.getScaledTouchSlop();
         }
 
@@ -132,7 +130,6 @@ public class SizeSelectBar extends BaseCustomView {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        int radius = 0;
         for (int i = 0; i < levelTotal; i++) {
             if (mSelectedItemIndex == i) {
                 sizePotPaint.setColor(itemSelectedColor);
@@ -153,15 +150,12 @@ public class SizeSelectBar extends BaseCustomView {
     public boolean onTouchEvent(MotionEvent event) {
         final float x = event.getX();
         final float y = event.getY();
-        final int action = event.getAction();
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 mDownPointX = (int) x;
                 mDownPointY = (int) y;
                 isTouchTriggered = true;
                 isClick = true;
-//                if (null != getParent())
-//                    getParent().requestDisallowInterceptTouchEvent(true);
                 break;
             case MotionEvent.ACTION_MOVE:
                 if (Math.abs(mDownPointY - event.getY()) < mTouchSlop) {
@@ -172,12 +166,14 @@ public class SizeSelectBar extends BaseCustomView {
                 invalidate();
                 break;
             case MotionEvent.ACTION_UP:
-//                if (null != getParent())
-//                    getParent().requestDisallowInterceptTouchEvent(false);
+                isTouchTriggered = false;
                 if (isClick) {
                     triggerOnItemSelected();
                     return true;
                 }
+                break;
+            case MotionEvent.ACTION_CANCEL:
+                isTouchTriggered = false;
                 break;
             default:
                 break;
@@ -192,7 +188,6 @@ public class SizeSelectBar extends BaseCustomView {
             if (rect.contains(mDownPointX, mDownPointY)) {
                 mSelectedItemIndex = i;
                 invalidate();
-                Log.d(TAG, "Item Selected" + mDownPointX + "," + mDownPointY + "； " + i);
                 if (onItemSelectedListener != null) {
                     onItemSelectedListener.onItemSelected(getItemDotSize(i));
                 }
