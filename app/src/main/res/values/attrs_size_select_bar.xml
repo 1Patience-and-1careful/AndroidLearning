@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="SizeSelectBar">
+        <!-- 触摸区域大小 -->
+        <attr name="sizeBarItemWidth" format="dimension"></attr>
+        <!-- 第一个的size -->
+        <attr name="sizeBarMinSize" format="dimension"></attr>
+        <!-- 每一级别递增 -->
+        <attr name="sizeBarStepSize" format="dimension"></attr>
+        <!-- 总共有多少级 -->
+        <attr name="sizeBarLevelTotal" format="integer"></attr>
+        <!-- 未被选中时颜色 -->
+        <attr name="sizeBarItemNormalColor" format="color" />
+        <!-- 被选中的Item 颜色 -->
+        <attr name="sizeBaritemSelectedColor" format="color" />
+        <!-- item 之间的间隔 需要比 -->
+        <attr name="sizeBarItemPadding" format="dimension">item 之间的间隔 需要比 itemWidht大</attr>
+
+    </declare-styleable>
+</resources>

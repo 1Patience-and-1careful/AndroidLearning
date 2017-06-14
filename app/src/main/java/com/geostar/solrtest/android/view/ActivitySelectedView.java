@@ -1,22 +1,21 @@
 package com.geostar.solrtest.android.view;
 
-import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Color;
+import android.support.annotation.Size;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
+import android.widget.Toast;
 
 import com.geostar.solrtest.R;
+import com.geostar.solrtest.android.view.colorselected.ColorSelectBar;
+import com.geostar.solrtest.android.view.colorselected.ColorCircleSelectorView;
 
-import java.io.BufferedInputStream;
+public class ActivitySelectedView extends AppCompatActivity implements View.OnClickListener, SizeSelectBar.OnItemSelectedListener {
 
-public class ActivitySelectedView extends AppCompatActivity implements View.OnClickListener {
-
-    SelectedCircleView selectedCircleView;
+    ColorCircleSelectorView colorCircleSelectorView;
 
     private int colors[] = new int[]{
             0xffa3d39c,
@@ -29,9 +28,11 @@ public class ActivitySelectedView extends AppCompatActivity implements View.OnCl
     private LinearLayout rootView;
 
 
-    private SelectedBar selectBar;
+    private ColorSelectBar selectBar;
 
     private Button button;
+
+    private SizeSelectBar sizeSelectBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +43,8 @@ public class ActivitySelectedView extends AppCompatActivity implements View.OnCl
 
         colors = getResources().getIntArray(R.array.color_bar);
 
-        selectBar = new SelectedBar(rootView,colors);
-        selectBar.setOnColorSelected(new SelectedBar.OnColorSelected() {
+        selectBar = new ColorSelectBar(rootView, colors);
+        selectBar.setOnColorSelected(new ColorSelectBar.OnColorSelected() {
             @Override
             public void onColorSelected(int color) {
                 //设置指示器的颜色值
@@ -51,6 +52,8 @@ public class ActivitySelectedView extends AppCompatActivity implements View.OnCl
             }
         });
         button = (Button) findViewById(R.id.btn_change_selection);
+        sizeSelectBar = (SizeSelectBar) findViewById(R.id.ssb_sizebar);
+        sizeSelectBar.setOnItemSelectedListener(this);
     }
 
 
@@ -60,4 +63,8 @@ public class ActivitySelectedView extends AppCompatActivity implements View.OnCl
     }
 
 
+    @Override
+    public void onItemSelected(int size) {
+        Toast.makeText(this, "Selected Size:" + size, Toast.LENGTH_SHORT).show();
+    }
 }

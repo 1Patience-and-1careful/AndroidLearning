@@ -1,32 +1,36 @@
-package com.geostar.solrtest.android.view;
+package com.geostar.solrtest.android.view.colorselected;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.graphics.Color;
 import android.view.View;
 import android.widget.LinearLayout;
 
 import com.geostar.solrtest.R;
 
 /**
+ * 颜色选择条
+ *
  * @author hanlyjiang on 2017/6/12-18:44.
  * @version 1.0
  */
 
-public class SelectedBar {
+public class ColorSelectBar {
 
-    LinearLayout rootView;
+    private ColorCircleSelectorView currentColorCircleSelectorView;
+
+    private LinearLayout rootView;
 
     private int margining = 0;
     private int width = 0;
     private int[] colors;
     private Context context;
     private OnColorSelected onColorSelected;
+    private int padding = 0;
 
     /**
      * 选中一个颜色时的监听
      */
-    interface OnColorSelected {
+    public interface OnColorSelected {
         void onColorSelected(int color);
     }
 
@@ -34,7 +38,7 @@ public class SelectedBar {
      * @param layout
      * @param colors
      */
-    public SelectedBar(LinearLayout layout, int[] colors) {
+    public ColorSelectBar(LinearLayout layout, int[] colors) {
         this.rootView = layout;
         this.colors = colors;
         context = layout.getContext();
@@ -56,30 +60,26 @@ public class SelectedBar {
      * @return
      */
     public int getCurrentSelectColor() {
-        View child = null;
-        for (int i = 0; i < rootView.getChildCount(); i++) {
-            child = rootView.getChildAt(i);
-            if (child instanceof SelectedCircleView) {
-                if (child.isSelected()) {
-                    return ((SelectedCircleView) child).getColor();
-                }
-            }
-        }
-        return Color.BLACK;
+        return currentColorCircleSelectorView.getColor();
     }
 
 
     private void init() {
         margining = getResources().getDimensionPixelOffset(R.dimen.common_margin);
         width = getResources().getDimensionPixelOffset(R.dimen.common_width);
+        padding = getResources().getDimensionPixelOffset(R.dimen.common_padding);
 
-        SelectedCircleView singleView = null;
+        ColorCircleSelectorView singleView = null;
         int index = 0;
         for (int color : colors) {
-            singleView = new SelectedCircleView(context);
+            singleView = new ColorCircleSelectorView(context);
             singleView.setColor(color);
             singleView.setHoleColor(0xffffffff);
             singleView.setSelected(index == 0);
+            singleView.setPadding(padding, padding, padding, padding);
+            if (index == 0) {
+                currentColorCircleSelectorView = singleView;
+            }
             addSingleView(singleView);
             index++;
         }
@@ -90,7 +90,7 @@ public class SelectedBar {
     }
 
 
-    private void addSingleView(SelectedCircleView singleView) {
+    private void addSingleView(ColorCircleSelectorView singleView) {
 
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(width, width);
         layoutParams.setMargins(margining, margining, margining, margining);
@@ -98,26 +98,22 @@ public class SelectedBar {
 
         singleView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                ((SelectedCircleView) v).setSelected(!v.isSelected());
-                if (v.isSelected()) {
-                    unselectOthers((SelectedCircleView) v);
-                    if (onColorSelected != null) {
-                        onColorSelected.onColorSelected(((SelectedCircleView) v).getColor());
-                    }
+            public void onClick(View circleView) {
+                if (circleView.isSelected()) {
+                    return;
+                }
+                unselectOthers();
+                circleView.setSelected(true);
+                currentColorCircleSelectorView = (ColorCircleSelectorView) circleView;
+                if (onColorSelected != null) {
+                    onColorSelected.onColorSelected(((ColorCircleSelectorView) circleView).getColor());
                 }
             }
         });
         rootView.addView(singleView);
     }
 
-    private void unselectOthers(SelectedCircleView self) {
-        View child = null;
-        for (int i = 0; i < rootView.getChildCount(); i++) {
-            child = rootView.getChildAt(i);
-            if (child instanceof SelectedCircleView && child != self) {
-                ((SelectedCircleView) child).setSelected(false);
-            }
-        }
+    private void unselectOthers() {
+        currentColorCircleSelectorView.setSelected(false);
     }
 }
