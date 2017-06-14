@@ -34,21 +34,26 @@ public class SizeSelectBar extends BaseCustomView {
     private int levelTotal;
     private int minSize;
     private int stepSize;
-    private int itemPadding;
-
     private int itemWidth;
     private Paint sizePotPaint;
-    private boolean isClick;
-    private boolean isTouchTriggered;
-
+    private int itemPadding;
     private int itemNormalColor;
     private int itemSelectedColor;
 
-    private OnItemSelectedListener onItemSelectedListener;
+    private int mDownPointY, mDownPointX;
+    private int mTouchSlop = 8;
+    private boolean isClick;
+    private boolean isTouchTriggered;
+
     /**
      * 当前选中的Item
      */
     private int mSelectedItemIndex = 0;
+    private OnItemSelectedListener onItemSelectedListener;
+
+    public interface OnItemSelectedListener {
+        void onItemSelected(int size);
+    }
 
     public SizeSelectBar(Context context) {
         super(context);
@@ -69,8 +74,6 @@ public class SizeSelectBar extends BaseCustomView {
 
     @Override
     protected void init(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-
-
         TypedArray typedArray = retrTypedArray(context, attrs, R.styleable.SizeSelectBar);
         levelTotal = typedArray.getInteger(R.styleable.SizeSelectBar_sizeBarLevelTotal, 5);
         minSize = typedArray.getDimensionPixelSize(R.styleable.SizeSelectBar_sizeBarMinSize, dp2px(4));
@@ -79,9 +82,7 @@ public class SizeSelectBar extends BaseCustomView {
         itemPadding = typedArray.getDimensionPixelOffset(R.styleable.SizeSelectBar_sizeBarItemPadding, (int) (itemWidth));
         itemNormalColor = typedArray.getColor(R.styleable.SizeSelectBar_sizeBarItemNormalColor, Color.BLUE);
         itemSelectedColor = typedArray.getColor(R.styleable.SizeSelectBar_sizeBaritemSelectedColor, Color.RED);
-
         typedArray.recycle();
-
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.DONUT) {
             ViewConfiguration conf = ViewConfiguration.get(getContext());
@@ -94,11 +95,6 @@ public class SizeSelectBar extends BaseCustomView {
         sizePotPaint = new Paint();
         sizePotPaint.setAntiAlias(true);
         sizePotPaint.setColor(itemNormalColor);
-
-    }
-
-    private int dp2px(int dp) {
-        return DisplayHelper.dp2px(dp, getContext());
     }
 
 
@@ -133,25 +129,6 @@ public class SizeSelectBar extends BaseCustomView {
     }
 
 
-    /**
-     * 计算视图最小需要的高度
-     *
-     * @return
-     */
-    private int calcItemWidth() {
-        int requiredSize = minSize + levelTotal * stepSize;
-        return Math.max(requiredSize, itemWidth);
-    }
-
-    /**
-     * 视图需要的最小宽度
-     *
-     * @return
-     */
-    private int calculateTotalWidth() {
-        return itemWidth * levelTotal + getTotalPadding(levelTotal - 1);
-    }
-
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
@@ -163,6 +140,64 @@ public class SizeSelectBar extends BaseCustomView {
                 sizePotPaint.setColor(itemNormalColor);
             }
             drawOneCircle(canvas, i);
+        }
+    }
+
+
+    public void setOnItemSelectedListener(OnItemSelectedListener onItemSelectedListener) {
+        this.onItemSelectedListener = onItemSelectedListener;
+    }
+
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        final float x = event.getX();
+        final float y = event.getY();
+        final int action = event.getAction();
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                mDownPointX = (int) x;
+                mDownPointY = (int) y;
+                isTouchTriggered = true;
+                isClick = true;
+//                if (null != getParent())
+//                    getParent().requestDisallowInterceptTouchEvent(true);
+                break;
+            case MotionEvent.ACTION_MOVE:
+                if (Math.abs(mDownPointY - event.getY()) < mTouchSlop) {
+                    isClick = true;
+                    break;
+                }
+                isClick = false;
+                invalidate();
+                break;
+            case MotionEvent.ACTION_UP:
+//                if (null != getParent())
+//                    getParent().requestDisallowInterceptTouchEvent(false);
+                if (isClick) {
+                    triggerOnItemSelected();
+                    return true;
+                }
+                break;
+            default:
+                break;
+        }
+        return isTouchTriggered;
+    }
+
+    private void triggerOnItemSelected() {
+        Rect rect = null;
+        for (int i = 0; i < minSize; i++) {
+            rect = getItemRect(i);
+            if (rect.contains(mDownPointX, mDownPointY)) {
+                mSelectedItemIndex = i;
+                invalidate();
+                Log.d(TAG, "Item Selected" + mDownPointX + "," + mDownPointY + "； " + i);
+                if (onItemSelectedListener != null) {
+                    onItemSelectedListener.onItemSelected(getItemDotSize(i));
+                }
+                break;
+            }
         }
     }
 
@@ -225,67 +260,27 @@ public class SizeSelectBar extends BaseCustomView {
     }
 
 
-    private int mDownPointY, mDownPointX;
-    private int mTouchSlop = 8;
-
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        final float x = event.getX();
-        final float y = event.getY();
-        final int action = event.getAction();
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                mDownPointX = (int) x;
-                mDownPointY = (int) y;
-                isTouchTriggered = true;
-                isClick = true;
-//                if (null != getParent())
-//                    getParent().requestDisallowInterceptTouchEvent(true);
-                break;
-            case MotionEvent.ACTION_MOVE:
-                if (Math.abs(mDownPointY - event.getY()) < mTouchSlop) {
-                    isClick = true;
-                    break;
-                }
-                isClick = false;
-                invalidate();
-                break;
-            case MotionEvent.ACTION_UP:
-//                if (null != getParent())
-//                    getParent().requestDisallowInterceptTouchEvent(false);
-                if (isClick) {
-                    triggerOnItemSelected();
-                    return true;
-                }
-                break;
-            default:
-                break;
-        }
-        return isTouchTriggered;
+    /**
+     * 计算视图最小需要的高度
+     *
+     * @return
+     */
+    private int calcItemWidth() {
+        int requiredSize = minSize + levelTotal * stepSize;
+        return Math.max(requiredSize, itemWidth);
     }
 
-    private void triggerOnItemSelected() {
-        Rect rect = null;
-        for (int i = 0; i < minSize; i++) {
-            rect = getItemRect(i);
-            if (rect.contains(mDownPointX, mDownPointY)) {
-                mSelectedItemIndex = i;
-                invalidate();
-                Log.d(TAG, "Item Selected" + mDownPointX + "," + mDownPointY + "； " + i);
-                if (onItemSelectedListener != null) {
-                    onItemSelectedListener.onItemSelected(getItemDotSize(i));
-                }
-                break;
-            }
-        }
+    /**
+     * 视图需要的最小宽度
+     *
+     * @return
+     */
+    private int calculateTotalWidth() {
+        return itemWidth * levelTotal + getTotalPadding(levelTotal - 1);
     }
 
 
-    public interface OnItemSelectedListener {
-        void onItemSelected(int size);
-    }
-
-    public void setOnItemSelectedListener(OnItemSelectedListener onItemSelectedListener) {
-        this.onItemSelectedListener = onItemSelectedListener;
+    private int dp2px(int dp) {
+        return DisplayHelper.dp2px(dp, getContext());
     }
 }
