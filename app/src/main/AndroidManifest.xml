@@ -62,7 +62,25 @@
         <activity android:name=".android.listview.DeptmentActivity" />
         <activity android:name=".android.simple.NestedViewActivity" />
         <activity android:name=".android.anim.AnimTestActivity" />
-        <activity android:name=".android.view.ActivitySelectedView"></activity>
+        <activity android:name=".android.view.ActivitySelectedView" />
+        <activity android:name=".components.ImageViewActivity" />
+        <activity android:name=".components.TestImageViewActivity" />
+
+        <receiver android:name=".android.view.NewAppWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/new_app_widget_info" />
+        </receiver>
+
+        <activity android:name=".android.view.NewAppWidgetConfigureActivity">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

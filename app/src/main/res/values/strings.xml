@@ -28,4 +28,7 @@
         \n 及试验时间进行说明。韩联社分析称，
         \n 鉴于金正恩公开活动的消息一般次日
         \n 见诸朝鲜报端，试射时间应该是27日。</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="configure">Configure</string>
+    <string name="add_widget">Add widget</string>
 </resources>

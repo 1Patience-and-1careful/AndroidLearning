@@ -29,8 +29,15 @@ dependencies {
     compile 'commons-net:commons-net:3.3'
     compile 'com.google.android.gms:play-services-appindexing:8.4.0'
     compile 'com.google.code.ksoap2-android:ksoap2-android:3.6.2'
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.google.code.gson:gson:2.8.0'
+
+    // PhotoView : https://github.com/chrisbanes/PhotoView
+    compile 'com.github.chrisbanes.photoview:library:1.2.4'
+    // https://github.com/square/picasso
+    compile 'com.squareup.picasso:picasso:2.5.2'
+    //https://github.com/romandanylyk/PageIndicatorView
+    compile 'com.romandanylyk:pageindicatorview:0.2.0@aar'
+//    compile 'com.android.support:support-core-ui:' + rootProject.ext.supportLibVersion
 }
 
 //https://docs.gradle.org/current/dsl/org.gradle.api.artifacts.dsl.RepositoryHandler.html

@@ -18,3 +18,5 @@
 
 
 -ignorewarnings
+
+-dontwarn com.squareup.okhttp.**

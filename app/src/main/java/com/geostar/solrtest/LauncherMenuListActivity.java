@@ -17,6 +17,7 @@ import com.geostar.solrtest.android.simple.NestedViewActivity;
 import com.geostar.solrtest.android.view.ActivitySelectedView;
 import com.geostar.solrtest.android.view.MainDividerActivity;
 import com.geostar.solrtest.android.view.SimpleViewGroupActivity;
+import com.geostar.solrtest.components.TestImageViewActivity;
 import com.geostar.solrtest.ftp.FTPDownloadActivity;
 import com.geostar.solrtest.solr.SolrTestActivity;
 import com.geostar.solrtest.solr.request.TwoFuncTestActivity;
@@ -63,6 +64,7 @@ public class LauncherMenuListActivity extends AppCompatActivity implements Adapt
         mActivities.add(makeActItem(DeptmentActivity.class, "组织结构 测试 ", "组织结构\n "));
         mActivities.add(makeActItem(NestedViewActivity.class, "嵌套滚动View测试", "嵌套滚动View测试\n "));
         mActivities.add(makeActItem(ActivitySelectedView.class, "自定义view canvas", "自定义view canvas\n "));
+        mActivities.add(makeActItem(TestImageViewActivity.class, "图片浏览器", "图片浏览器\n "));
     }
 
     private Map<String, Object> makeActItem(Class activity, String title, String decs) {
