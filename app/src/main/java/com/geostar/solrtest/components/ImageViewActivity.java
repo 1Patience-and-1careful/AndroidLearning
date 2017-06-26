@@ -21,6 +21,10 @@ import uk.co.senab.photoview.PhotoView;
 
 /**
  * 图片浏览Activity
+ * <br/>
+ * intent 启动参数：
+ * <li>1. images - String 类型list 存储图片url </li>
+ * <li>2. index - int 型，存储第启动时查看的图片位于images 中的位置 </li>
  *
  * @author hanlyjiang on 2017/6/26-22:08.
  * @version 1.0
