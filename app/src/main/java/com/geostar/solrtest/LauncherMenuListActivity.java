@@ -10,6 +10,7 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
 import com.geostar.solrtest.android.anim.AnimTestActivity;
+import com.geostar.solrtest.android.anim.CrossfadingTwoViewActivity;
 import com.geostar.solrtest.android.listview.DeptmentActivity;
 import com.geostar.solrtest.android.listview.ExpandableListActivity;
 import com.geostar.solrtest.android.recyclerview.RecyclerViewHorizonActivity;
@@ -52,6 +53,7 @@ public class LauncherMenuListActivity extends AppCompatActivity implements Adapt
 
     private void setStartItems() {
         mActivities = new ArrayList<>();
+        mActivities.add(makeActItem(CrossfadingTwoViewActivity.class, "淡入淡出动画 ", "两个视图切换时淡入淡出"));
         mActivities.add(makeActItem(AnimTestActivity.class, "视图动画测试 ", "视图动画测试"));
         mActivities.add(makeActItem(SolrTestActivity.class, "Solr 服务测试 ", "连接Solr服务查询测试"));
         mActivities.add(makeActItem(FTPDownloadActivity.class, "FTP 服务连接下载测试 ", "使用Apache 包连接FTP服务"));

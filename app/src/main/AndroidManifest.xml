@@ -81,6 +81,7 @@
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>
         </activity>
+        <activity android:name=".android.anim.CrossfadingTwoViewActivity"></activity>
     </application>
 
 </manifest>
