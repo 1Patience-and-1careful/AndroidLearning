@@ -4,6 +4,7 @@ import android.net.Uri;
 import android.text.TextUtils;
 import android.util.Log;
 
+
 import com.geostar.solrtest.utils.SimpleHTTPUtils;
 
 import org.json.JSONException;

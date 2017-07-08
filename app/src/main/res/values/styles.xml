@@ -21,6 +21,7 @@
         <item name="android:gravity">left</item>
         <item name="android:textColor">#0f0f0f</item>
     </style>
+
     <style name="Text.Primary" parent="Text">
         <item name="android:textSize">15sp</item>
         <item name="android:gravity">left</item>
@@ -69,10 +70,25 @@
         <item name="android:backgroundDimEnabled">true</item><!--模糊-->
         <item name="android:windowAnimationStyle">@style/dialogWindowAnim</item>
     </style>
-    <style name="dialogWindowAnim" parent="@android:style/Animation.Dialog" mce_bogus="1">
+
+    <style name="dialogWindowAnim" mce_bogus="1" parent="@android:style/Animation.Dialog">
         <item name="android:windowEnterAnimation">@anim/dialog_enter_anim</item>
         <item name="android:windowExitAnimation">@anim/dialog_exit_anim</item>
     </style>
+
+    <style name="RadioButton.Selectable" parent="RadioButton">
+        <item name="android:background">@drawable/transparent_and_blue_selector</item>
+        <item name="android:button">@null</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/black_and_white_selector</item>
+    </style>
+
+    <style name="RadioButton.Selectable.WithIcon" parent="RadioButton.Selectable">
+        <item name="android:drawableTop">@android:drawable/ic_btn_speak_now</item>
+    </style>
+
+    <style name="RadioButton"></style>
 
     <color name="transparent">#00ffffff</color>
 </resources>

@@ -55,7 +55,7 @@ public class FTPDownUtils {
 
     private void notifyStart(final FTPDownloadCallback callback,final long totalSize,final long startSize){
         if(callback != null){
-            RunnableUtils.executeOnMainThread(new Runnable() {
+            RunnableUtils.postUI(new Runnable() {
                 @Override
                 public void run() {
                     callback.onDownloadStart(totalSize,startSize);
@@ -66,7 +66,7 @@ public class FTPDownUtils {
 
     private void notifyError(final  FTPDownloadCallback callback,final int errorCode){
         if(callback != null){
-            RunnableUtils.executeOnMainThread(new Runnable() {
+            RunnableUtils.postUI(new Runnable() {
                 @Override
                 public void run() {
                     callback.onDownloadError(errorCode);
@@ -77,7 +77,7 @@ public class FTPDownUtils {
 
     private void notifyUpdating(final FTPDownloadCallback callback, final long totalSize, final long downloadSize){
         if(callback != null){
-            RunnableUtils.executeOnMainThread(new Runnable() {
+            RunnableUtils.postUI(new Runnable() {
                 @Override
                 public void run() {
                     callback.onDownloading(totalSize,downloadSize);
@@ -88,7 +88,7 @@ public class FTPDownUtils {
 
     private void notifyFinish(final FTPDownloadCallback callback, final String filePath){
         if(callback != null){
-            RunnableUtils.executeOnMainThread(new Runnable() {
+            RunnableUtils.postUI(new Runnable() {
                 @Override
                 public void run() {
                     callback.onDownloadFinished(filePath);

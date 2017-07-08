@@ -26,7 +26,6 @@ dependencies {
 
     //http://commons.apache.org/proper/commons-net/
 
-
     // PhotoView : https://github.com/chrisbanes/PhotoView
     // https://github.com/square/picasso
     //https://github.com/romandanylyk/PageIndicatorView
@@ -45,6 +44,12 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.romandanylyk:pageindicatorview:0.2.0@aar'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
+
+    // logger tools library : https://github.com/orhanobut/logger
+    compile 'com.orhanobut:logger:1.15'
+
+    compile 'com.jakewharton:butterknife:8.7.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.7.0'
 }
 
 //https://docs.gradle.org/current/dsl/org.gradle.api.artifacts.dsl.RepositoryHandler.html
@@ -92,7 +97,7 @@ android {
 
     useLibrary 'org.apache.http.legacy'
 
-    buildToolsVersion '25.0.0'
+
 }
 
 

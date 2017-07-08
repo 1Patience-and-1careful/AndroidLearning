@@ -251,7 +251,7 @@ public class FTPDownloadActivity extends AppCompatActivity implements View.OnCli
     @Override
     public void onDownloadStart(final long totalSize, final long startSize) {
         unify_outPutResult("onDownloadStart " + startSize + " / " + totalSize);
-        RunnableUtils.executeOnMainThread(new Runnable() {
+        RunnableUtils.postUI(new Runnable() {
             @Override
             public void run() {
                 if (!mDownProgress.isShowing() ) {
@@ -273,7 +273,7 @@ public class FTPDownloadActivity extends AppCompatActivity implements View.OnCli
     @Override
     public void onDownloading(final long fileTotalSize, final long downedSize) {
         unify_outPutResult("onDownloading " + downedSize + " / " + fileTotalSize);
-        RunnableUtils.executeOnMainThread(new Runnable() {
+        RunnableUtils.postUI(new Runnable() {
 
             @Override
             public void run() {
@@ -285,7 +285,7 @@ public class FTPDownloadActivity extends AppCompatActivity implements View.OnCli
     @Override
     public void onDownloadFinished(final String filePath) {
         unify_outPutResult("onDownloadFinished");
-        RunnableUtils.executeOnMainThread(new Runnable() {
+        RunnableUtils.postUI(new Runnable() {
 
             @Override
             public void run() {
@@ -299,7 +299,7 @@ public class FTPDownloadActivity extends AppCompatActivity implements View.OnCli
     public void onDownloadError(int errorCode) {
         unify_outPutResult("onDownloadError:" + FTPDownUtils.parseErrorCode(errorCode));
         Toast.makeText(this, "下载错误:" + FTPDownUtils.parseErrorCode(errorCode), Toast.LENGTH_SHORT).show();
-        RunnableUtils.executeOnMainThread(new Runnable() {
+        RunnableUtils.postUI(new Runnable() {
 
             @Override
             public void run() {

@@ -81,9 +81,14 @@
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>
         </activity>
-        <activity android:name=".android.anim.CrossfadingTwoViewActivity"></activity>
+        <activity android:name=".android.anim.CrossfadingTwoViewActivity" />
         <activity android:name=".dialog.DialogTestActivity" />
-        <activity android:name=".android.popup.PopUpTestActivity"></activity>
+        <activity android:name=".android.popup.PopUpTestActivity" />
+        <activity
+            android:name=".android.fragment.FragmentNestedActivity"
+            android:label="@string/fragment_nested"
+            android:screenOrientation="landscape"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
     </application>
 
 </manifest>

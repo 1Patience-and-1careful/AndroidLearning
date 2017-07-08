@@ -10,6 +10,7 @@
     <color name="textSecondary">#666666</color>
     <color name="divider_color">#cccccc</color>
     <color name="common_page_background">#efefef</color>
+    <color name="gray_mask">#efefef</color>
 
     <integer-array name="color_bar">
         <item >0xffa3d39c</item>

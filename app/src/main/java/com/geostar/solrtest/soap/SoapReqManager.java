@@ -130,7 +130,7 @@ public class SoapReqManager {
     private static void notifyOnSuccess(final RequestCallBack callBack, final Object object, boolean notifyOnUI) {
         if (callBack != null) {
             if (notifyOnUI) {
-                RunnableUtils.executeOnMainThread(new Runnable() {
+                RunnableUtils.postUI(new Runnable() {
                     @Override
                     public void run() {
                         callBack.onSuccess(object);
@@ -146,7 +146,7 @@ public class SoapReqManager {
     private static void notifyOnFailed(final RequestCallBack callBack, boolean notifyOnUI) {
         if (callBack != null) {
             if (notifyOnUI) {
-                RunnableUtils.executeOnMainThread(new Runnable() {
+                RunnableUtils.postUI(new Runnable() {
                     @Override
                     public void run() {
                         callBack.onFailed();
@@ -161,7 +161,7 @@ public class SoapReqManager {
     private static void notifyonError(final RequestCallBack callBack, final Exception e, boolean notifyOnUI) {
         if (callBack != null) {
             if (notifyOnUI) {
-                RunnableUtils.executeOnMainThread(new Runnable() {
+                RunnableUtils.postUI(new Runnable() {
                     @Override
                     public void run() {
                         callBack.onError(e);

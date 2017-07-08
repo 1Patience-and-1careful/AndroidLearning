@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray_mask"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:id="@+id/ll_second_frag"
+        android:layout_width="380dp"
+        android:layout_height="match_parent"
+        android:background="#ffffff"
+        android:orientation="vertical">
+
+        <RadioGroup
+            android:id="@+id/rgp_status_switcher"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checkedButton="@+id/rb_manhua"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rb_manhua"
+                style="@style/RadioButton.Selectable"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="漫画" />
+
+            <RadioButton
+                android:id="@+id/rb_zhibo"
+                style="@style/RadioButton.Selectable"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="直播" />
+        </RadioGroup>
+    </LinearLayout>
+
+</LinearLayout>

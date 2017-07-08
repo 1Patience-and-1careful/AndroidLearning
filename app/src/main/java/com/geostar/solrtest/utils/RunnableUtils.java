@@ -83,6 +83,10 @@ public class RunnableUtils {
         return EXECUTOR.submit(callable);
     }
 
+    public static void postUI(Runnable runnable) {
+        postToMainThread(runnable,0);
+    }
+
     private static class UIHandler extends Handler {
 
         UIHandler(Looper looper) {

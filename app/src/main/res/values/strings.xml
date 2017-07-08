@@ -31,4 +31,8 @@
     <string name="appwidget_text">EXAMPLE</string>
     <string name="configure">Configure</string>
     <string name="add_widget">Add widget</string>
+    <string name="contactors">联系人</string>
+    <string name="message">消息</string>
+    <string name="status">动态</string>
+    <string name="fragment_nested">Fragment嵌套测试</string>
 </resources>
