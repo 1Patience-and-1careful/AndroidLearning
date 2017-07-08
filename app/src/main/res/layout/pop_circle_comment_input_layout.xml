@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#fafafa"
+    android:orientation="horizontal"
+    android:paddingBottom="10dp"
+    android:paddingLeft="8dp"
+    android:paddingRight="8dp"
+    android:paddingTop="10dp">
+
+    <EditText
+        android:id="@+id/et_input_comment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1"
+        android:background="@drawable/comment_input_bg"
+        android:focusable="true"
+        android:maxLength="500"
+        android:maxLines="4"
+        android:minLines="1"
+        android:padding="8dp"
+        android:textSize="15sp" />
+
+    <requestFocus />
+
+    <TextView
+        android:id="@+id/btn_submit_comment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:background="@drawable/submit_btn_bg"
+        android:gravity="top"
+        android:padding="8dp"
+        android:text="发送"
+        android:layout_marginLeft="10dp"
+        android:textColor="@color/submit_btn_color_selector"
+        android:textSize="15sp" />
+
+</LinearLayout>

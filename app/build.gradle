@@ -25,7 +25,12 @@ dependencies {
     testCompile 'junit:junit:' + rootProject.ext.junitVersion
 
     //http://commons.apache.org/proper/commons-net/
-    
+
+
+    // PhotoView : https://github.com/chrisbanes/PhotoView
+    // https://github.com/square/picasso
+    //https://github.com/romandanylyk/PageIndicatorView
+    //    compile 'com.android.support:support-core-ui:' + rootProject.ext.supportLibVersion
 
     // PhotoView : https://github.com/chrisbanes/PhotoView
     // https://github.com/square/picasso

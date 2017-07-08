@@ -82,6 +82,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".android.anim.CrossfadingTwoViewActivity"></activity>
+        <activity android:name=".dialog.DialogTestActivity" />
+        <activity android:name=".android.popup.PopUpTestActivity"></activity>
     </application>
 
 </manifest>

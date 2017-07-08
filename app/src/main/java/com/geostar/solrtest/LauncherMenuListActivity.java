@@ -7,18 +7,21 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.SimpleAdapter;
 
 import com.geostar.solrtest.android.anim.AnimTestActivity;
 import com.geostar.solrtest.android.anim.CrossfadingTwoViewActivity;
 import com.geostar.solrtest.android.listview.DeptmentActivity;
 import com.geostar.solrtest.android.listview.ExpandableListActivity;
+import com.geostar.solrtest.android.popup.PopUpTestActivity;
 import com.geostar.solrtest.android.recyclerview.RecyclerViewHorizonActivity;
 import com.geostar.solrtest.android.simple.NestedViewActivity;
 import com.geostar.solrtest.android.view.ActivitySelectedView;
 import com.geostar.solrtest.android.view.MainDividerActivity;
 import com.geostar.solrtest.android.view.SimpleViewGroupActivity;
 import com.geostar.solrtest.components.TestImageViewActivity;
+import com.geostar.solrtest.dialog.DialogTestActivity;
 import com.geostar.solrtest.ftp.FTPDownloadActivity;
 import com.geostar.solrtest.solr.SolrTestActivity;
 import com.geostar.solrtest.solr.request.TwoFuncTestActivity;
@@ -54,6 +57,7 @@ public class LauncherMenuListActivity extends AppCompatActivity implements Adapt
     private void setStartItems() {
         mActivities = new ArrayList<>();
         mActivities.add(makeActItem(CrossfadingTwoViewActivity.class, "淡入淡出动画 ", "两个视图切换时淡入淡出"));
+        mActivities.add(makeActItem(PopUpTestActivity.class, "弹出框 ", "弹出框测试"));
         mActivities.add(makeActItem(AnimTestActivity.class, "视图动画测试 ", "视图动画测试"));
         mActivities.add(makeActItem(SolrTestActivity.class, "Solr 服务测试 ", "连接Solr服务查询测试"));
         mActivities.add(makeActItem(FTPDownloadActivity.class, "FTP 服务连接下载测试 ", "使用Apache 包连接FTP服务"));
@@ -67,6 +71,7 @@ public class LauncherMenuListActivity extends AppCompatActivity implements Adapt
         mActivities.add(makeActItem(NestedViewActivity.class, "嵌套滚动View测试", "嵌套滚动View测试\n "));
         mActivities.add(makeActItem(ActivitySelectedView.class, "自定义view canvas", "自定义view canvas\n "));
         mActivities.add(makeActItem(TestImageViewActivity.class, "图片浏览器", "图片浏览器\n "));
+        mActivities.add(makeActItem(DialogTestActivity.class, "对话框", "对话框 底部式\n "));
     }
 
     private Map<String, Object> makeActItem(Class activity, String title, String decs) {
