@@ -88,7 +88,8 @@
             android:name=".android.fragment.FragmentNestedActivity"
             android:label="@string/fragment_nested"
             android:screenOrientation="landscape"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity android:name=".android.view.ScrollViewLocateActivity"></activity>
     </application>
 
 </manifest>

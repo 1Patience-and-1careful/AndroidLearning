@@ -35,6 +35,13 @@
                 android:layout_weight="1"
                 android:text="直播" />
         </RadioGroup>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/fl_fragment_stub_status">
+
+        </FrameLayout>
     </LinearLayout>
 
 </LinearLayout>

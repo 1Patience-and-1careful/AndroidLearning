@@ -60,7 +60,6 @@ public class FragmentNestedActivity extends AppCompatActivity implements RadioGr
     }
 
 
-
     @Override
     public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
         if (checkedId == R.id.rb_contact) {
@@ -73,18 +72,24 @@ public class FragmentNestedActivity extends AppCompatActivity implements RadioGr
     }
 
     private void switchPage(String fragKey) {
-        Fragment fragment = fragmentCachedObjFactory.get(fragKey);
-        if (!fragment.isAdded()) {
-            Bundle args = new Bundle();
-            args.putString("title",fragKey);
-            fragment.setArguments(args);
-        }
+        Fragment fragment = fragmentCachedObjFactory.get(fragKey,false);
+//        if (!fragment.isAdded()) {
+//            Bundle args = new Bundle();
+//            args.putString("title",fragKey);
+//            fragment.setArguments(args);
+//        }
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         if (getSupportFragmentManager().findFragmentById(R.id.fl_fragment_stub) != null) {
             transaction.replace(R.id.fl_fragment_stub, fragment);
         } else {
             transaction.add(R.id.fl_fragment_stub, fragment);
         }
-        transaction.commit();
+//        transaction.commit();
+        transaction.addToBackStack(null).commit();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 }

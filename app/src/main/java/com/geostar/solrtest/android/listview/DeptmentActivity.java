@@ -14,11 +14,12 @@ public class DeptmentActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_deptment);
-        deptMentFragment = new DeparMentFragment();
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.fl_fragment_stub, deptMentFragment)
-                .commit();
-
+        if(deptMentFragment == null) {
+            deptMentFragment = new DeparMentFragment();
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.fl_fragment_stub, deptMentFragment)
+                    .commit();
+        }
     }
 
 

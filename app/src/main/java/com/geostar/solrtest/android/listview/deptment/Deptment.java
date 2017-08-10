@@ -1,5 +1,6 @@
 package com.geostar.solrtest.android.listview.deptment;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,7 +9,7 @@ import java.util.List;
  * date:2017/5/11 11:35
  */
 
-public class Deptment {
+public class Deptment implements Serializable{
 
     private int lv;
     private String deptid;

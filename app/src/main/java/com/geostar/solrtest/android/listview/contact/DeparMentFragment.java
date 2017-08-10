@@ -1,7 +1,10 @@
 package com.geostar.solrtest.android.listview.contact;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +17,7 @@ import com.geostar.solrtest.android.listview.deptment.DeptmentList;
 import com.geostar.solrtest.android.listview.deptment.DeptmentResponse;
 import com.geostar.solrtest.android.listview.deptment.User;
 import com.geostar.solrtest.base.BaseFragment;
+import com.geostar.solrtest.utils.LogUtils;
 import com.geostar.solrtest.utils.TestLogUtils;
 import com.google.gson.Gson;
 
@@ -28,6 +32,7 @@ import java.util.List;
  */
 
 public class DeparMentFragment extends BaseFragment {
+    private static final String TAG = "DeparMentFragment";
 
     private RecyclerView recyclerView;
 
@@ -36,6 +41,42 @@ public class DeparMentFragment extends BaseFragment {
     private CommonIndicatorBarView<Deptment> deptIndicatorBarView;
     private RecyclerView recyclerViewIndicator;
     private Deptment rootDeptment;
+    private Deptment currentShowingDept;
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        System.out.println("onSaveInstanceState " + this.toString() );
+        outState.putSerializable("rootDeptment", rootDeptment);
+        outState.putSerializable("currentShowingDept", currentShowingDept);
+        deptIndicatorBarView.onSaveInstanceState(outState);
+    }
+
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        System.out.println("onActivityCreated " + this.toString());
+        super.onActivityCreated(savedInstanceState);
+        if (savedInstanceState != null) {
+            rootDeptment = (Deptment) savedInstanceState.getSerializable("rootDeptment");
+            currentShowingDept = (Deptment) savedInstanceState.getSerializable("currentShowingDept");
+            deptIndicatorBarView.onViewStateRestored(savedInstanceState);
+        }
+        if (rootDeptment == null) {
+            rootDeptment = createTestData();
+            currentShowingDept = rootDeptment;
+            showDeptStructData(currentShowingDept);
+        } else {
+            showDeptStructData(currentShowingDept, false);
+        }
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+//        System.out.println("onViewStateRestored");
+    }
+
 
     @Override
     public int getLayoutResId() {
@@ -81,16 +122,13 @@ public class DeparMentFragment extends BaseFragment {
                 showDeptStructData(item, false);
             }
         });
-
-        createTestData();
-
         recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
 
         mAdapter = new ExpandableDataAdapter();
-        showDeptStructData(rootDeptment);
+
         mAdapter.setItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClickListener(DataWrapper dataWrapper) {
@@ -98,6 +136,7 @@ public class DeparMentFragment extends BaseFragment {
                     Deptment deptment = (Deptment) dataWrapper.getData();
                     if (isDeptHasChilds(deptment)) {
                         showDeptStructData(deptment);
+
                     } else {
                         Toast.makeText(getActivity(), "该部门是空的", Toast.LENGTH_SHORT).show();
                     }
@@ -147,6 +186,7 @@ public class DeparMentFragment extends BaseFragment {
      * @param updateIndicator
      */
     void showDeptStructData(Deptment deptment, boolean updateIndicator) {
+        currentShowingDept = deptment;
         mAdapter.updateData(transData(deptment));
         if (updateIndicator) {
             deptIndicatorBarView.addItem(deptment.getDeptname(), deptment);
@@ -155,6 +195,7 @@ public class DeparMentFragment extends BaseFragment {
 
     void showDeptStructData(Deptment deptment) {
         showDeptStructData(deptment, true);
+
     }
 
     interface OnItemClickListener {

@@ -1,6 +1,8 @@
 package com.geostar.solrtest.android.listview.contact;
 
 import android.content.Context;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,7 +11,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.geostar.solrtest.R;
+import com.geostar.solrtest.android.listview.deptment.Deptment;
+import com.geostar.solrtest.android.listview.deptment.IndicatorItem;
 
+import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,11 +33,25 @@ public class CommonIndicatorBarView<T> {
     }
 
     private final IndicatorAdapter indicatorAdapter;
-    private List<IndicatorItem> data = new ArrayList<>();
+    private ArrayList<IndicatorItem<T>> data = new ArrayList<>();
     private RecyclerView recyclerView;
 
     private OnItemClickListenr<T> onItemClickListenr;
 
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putSerializable("indicators", data);
+    }
+
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        if(savedInstanceState != null){
+            data = (ArrayList<IndicatorItem<T>>) savedInstanceState.getSerializable("indicators");
+            if(data != null){
+                indicatorAdapter.notifyDataSetChanged();
+            }else{
+                data = new ArrayList<>();
+            }
+        }
+    }
 
     public CommonIndicatorBarView(RecyclerView recyclerView) {
         this.recyclerView = recyclerView;
@@ -52,6 +72,7 @@ public class CommonIndicatorBarView<T> {
 
     /**
      * 是否可以回退
+     *
      * @return
      */
     public boolean isBackable() {
@@ -60,19 +81,21 @@ public class CommonIndicatorBarView<T> {
 
     /**
      * 获取View对象
+     *
      * @return
      */
-    public View getIndicatorView(){
+    public View getIndicatorView() {
         return recyclerView;
     }
 
     /**
      * 添加一个标签数据
+     *
      * @param item
      * @param realData
      */
     public void addItem(String item, T realData) {
-        data.add(new IndicatorItem(item, realData));
+        data.add(new IndicatorItem<T>(item, realData));
         indicatorAdapter.notifyDataSetChanged();
         scrollToLastItem();
     }
@@ -94,15 +117,17 @@ public class CommonIndicatorBarView<T> {
 
     /**
      * 回退到指定位置,该位置不会被移除
+     *
      * @param where 位置
      */
     public void back(int where) {
-        List<IndicatorItem> retainItem = new ArrayList<>();
+        List<IndicatorItem<T>> retainItem = new ArrayList<>();
         for (int i = 0; i <= where; i++) {
             retainItem.add(data.get(i));
         }
         if (onItemClickListenr != null) {
-            onItemClickListenr.onGoBack(retainItem.size() - 1, retainItem.get(retainItem.size() - 1).getRealData());
+            onItemClickListenr.onGoBack(retainItem.size() - 1,
+                    retainItem.get(retainItem.size() - 1).getRealData());
         }
         data.clear();
         data.addAll(retainItem);
@@ -154,33 +179,6 @@ public class CommonIndicatorBarView<T> {
             }
         }
 
-    }
-
-
-    class IndicatorItem {
-        String name;
-        T realData;
-
-        public IndicatorItem(String name, T realData) {
-            this.name = name;
-            this.realData = realData;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public T getRealData() {
-            return realData;
-        }
-
-        public void setRealData(T realData) {
-            this.realData = realData;
-        }
     }
 
 }

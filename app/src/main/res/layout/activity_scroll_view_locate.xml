@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.geostar.solrtest.android.view.ScrollViewLocateActivity">
+
+    <Button
+        android:id="@+id/btn_locate_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="定位"/>
+
+    <android.support.v4.widget.NestedScrollView xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/nsl_root_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context="com.geostar.solrtest.android.view.ScrollViewLocateActivity">
+
+        <LinearLayout
+            android:id="@+id/llc_content_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" />
+
+    </android.support.v4.widget.NestedScrollView>
+</LinearLayout>

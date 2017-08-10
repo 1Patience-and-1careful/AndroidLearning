@@ -20,6 +20,7 @@ import com.geostar.solrtest.android.recyclerview.RecyclerViewHorizonActivity;
 import com.geostar.solrtest.android.simple.NestedViewActivity;
 import com.geostar.solrtest.android.view.ActivitySelectedView;
 import com.geostar.solrtest.android.view.MainDividerActivity;
+import com.geostar.solrtest.android.view.ScrollViewLocateActivity;
 import com.geostar.solrtest.android.view.SimpleViewGroupActivity;
 import com.geostar.solrtest.components.TestImageViewActivity;
 import com.geostar.solrtest.dialog.DialogTestActivity;
@@ -57,6 +58,7 @@ public class LauncherMenuListActivity extends AppCompatActivity implements Adapt
 
     private void setStartItems() {
         mActivities = new ArrayList<>();
+        mActivities.add(makeActItem(ScrollViewLocateActivity.class, "ScrollView 中定位滚动视图", "定位滚动视图"));
         mActivities.add(makeActItem(FragmentNestedActivity.class, "Fragment嵌套测试", "Fragment嵌套测试 - Fragment 嵌套Fragment 并切换"));
         mActivities.add(makeActItem(CrossfadingTwoViewActivity.class, "淡入淡出动画 ", "两个视图切换时淡入淡出"));
         mActivities.add(makeActItem(PopUpTestActivity.class, "弹出框 ", "弹出框测试"));
