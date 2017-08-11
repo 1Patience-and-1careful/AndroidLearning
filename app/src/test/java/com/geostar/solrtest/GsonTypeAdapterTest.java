@@ -34,7 +34,7 @@ public class GsonTypeAdapterTest {
         Assert.assertEquals(3,dataset.getChild().getMap().size());
         Assert.assertEquals("小宝宝",dataset.getChild().getMap().get("name"));
         Assert.assertEquals("1",dataset.getChild().getMap().get("age"));
-        Assert.assertEquals(null,dataset.getChild().getMap().get("gender"));
+        Assert.assertEquals("无",dataset.getChild().getMap().get("gender"));
         System.out.println(dataset.getTitle());
     }
 
