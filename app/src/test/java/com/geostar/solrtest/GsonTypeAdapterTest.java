@@ -26,6 +26,11 @@ public class GsonTypeAdapterTest {
             "  }\n" +
             "}";
 
+    String datasetJson2 = "{\n" +
+            "  \"title\":\"这是标题\",\n" +
+            "  \"child\":null\n" +
+            "}";
+
     @Test
     public void test_TypeAdapter() {
         Gson gson = new GsonBuilder().registerTypeAdapter(Dataset.Child.class, new DatasetTypeAdapter()).create();
@@ -36,6 +41,14 @@ public class GsonTypeAdapterTest {
         Assert.assertEquals("1",dataset.getChild().getMap().get("age"));
         Assert.assertEquals("无",dataset.getChild().getMap().get("gender"));
         System.out.println(dataset.getTitle());
+    }
+
+    @Test
+    public void test_TypeAdapterNull() {
+        Gson gson = new GsonBuilder().registerTypeAdapter(Dataset.Child.class, new DatasetTypeAdapter()).create();
+        Dataset dataset = gson.fromJson(datasetJson2,Dataset.class);
+        Assert.assertEquals("这是标题",dataset.getTitle());
+        Assert.assertEquals(null,dataset.getChild());
     }
 
     @Test

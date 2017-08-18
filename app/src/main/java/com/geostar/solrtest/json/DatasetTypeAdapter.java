@@ -1,7 +1,5 @@
 package com.geostar.solrtest.json;
 
-import android.util.Log;
-
 import com.geostar.solrtest.json.bean.Dataset;
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
@@ -26,6 +24,10 @@ public class DatasetTypeAdapter extends TypeAdapter<Dataset.Child> {
         System.out.println("read called");
         Dataset.Child child = new Dataset.Child();
         JsonToken token = reader.peek();
+        if (token.equals(JsonToken.NULL)) { //应对 对象为  null
+            reader.skipValue();
+            return null;
+        }
         if (token.equals(JsonToken.BEGIN_OBJECT)) {
             reader.beginObject();
             String key = null;
@@ -33,14 +35,14 @@ public class DatasetTypeAdapter extends TypeAdapter<Dataset.Child> {
             while (!reader.peek().equals(JsonToken.END_OBJECT)) {
                 if (reader.peek().equals(JsonToken.NAME)) {
                     key = reader.nextName();
-                    if(reader.peek().equals(JsonToken.NULL)){
+                    if (reader.peek().equals(JsonToken.NULL)) {
                         value = "无";
                         reader.skipValue();
-                    }else{
+                    } else {
                         value = reader.nextString();
                     }
-                    System.out.println(key + ":" +value);
-                    child.getMap().put(key,value);
+                    System.out.println(key + ":" + value);
+                    child.getMap().put(key, value);
                 }
             }
             reader.endObject();
