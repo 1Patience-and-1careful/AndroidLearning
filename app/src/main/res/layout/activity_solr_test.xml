@@ -4,7 +4,7 @@
     android:id="@+id/activity_solr_test"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.geostar.solrtest.solr.SolrTestActivity">
+    tools:context="com.hanlyjiang.learnandroid.solr.SolrTestActivity">
 
     <LinearLayout
         android:id="@+id/ll_top_bar"

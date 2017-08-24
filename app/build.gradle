@@ -35,10 +35,9 @@ dependencies {
     // https://github.com/square/picasso
     //https://github.com/romandanylyk/PageIndicatorView
     //    compile 'com.android.support:support-core-ui:' + rootProject.ext.supportLibVersion
-    
 
     // logger tools library : https://github.com/orhanobut/logger
-    
+
     compile 'org.apache.httpcomponents:httpclient-android:4.3.5'
     compile 'commons-net:commons-net:3.3'
     compile 'com.google.android.gms:play-services-appindexing:8.4.0'

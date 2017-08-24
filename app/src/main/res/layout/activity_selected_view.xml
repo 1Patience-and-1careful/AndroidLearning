@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.geostar.solrtest.android.view.ActivitySelectedView">
+    tools:context="com.hanlyjiang.learnandroid.android.view.ActivitySelectedView">
 
     <!--<com.geostar.solrtest.android.view.SelectedCircleView-->
     <!--android:id="@+id/selected_circle_view"-->
@@ -32,7 +32,7 @@
         android:layout_height="wrap_content"
         android:onClick="onClick" />
 
-    <com.geostar.solrtest.android.view.SizeSelectBar
+    <com.hanlyjiang.learnandroid.android.view.SizeSelectBar
         android:id="@+id/ssb_sizebar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

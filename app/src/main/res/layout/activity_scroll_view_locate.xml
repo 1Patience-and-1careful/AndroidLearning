@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.geostar.solrtest.android.view.ScrollViewLocateActivity">
+    tools:context="com.hanlyjiang.learnandroid.android.view.ScrollViewLocateActivity">
 
     <Button
         android:id="@+id/btn_locate_item"
@@ -17,7 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context="com.geostar.solrtest.android.view.ScrollViewLocateActivity">
+        tools:context="com.hanlyjiang.learnandroid.android.view.ScrollViewLocateActivity">
 
         <LinearLayout
             android:id="@+id/llc_content_view"

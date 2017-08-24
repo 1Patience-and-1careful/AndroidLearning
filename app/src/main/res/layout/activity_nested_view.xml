@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.geostar.solrtest.android.simple.NestedViewActivity">
+    tools:context="com.hanlyjiang.learnandroid.android.simple.NestedViewActivity">
 
     
-    <com.geostar.solrtest.android.simple.NestedSrollTextView
+    <com.hanlyjiang.learnandroid.android.simple.NestedSrollTextView
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:text="@string/test_str"

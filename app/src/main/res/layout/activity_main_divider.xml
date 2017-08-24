@@ -6,9 +6,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.geostar.solrtest.android.view.MainDividerActivity">
+    tools:context="com.hanlyjiang.learnandroid.android.view.MainDividerActivity">
 
-    <com.geostar.solrtest.android.view.DividerView xmlns:app="http://schemas.android.com/apk/res-auto"
+    <com.hanlyjiang.learnandroid.android.view.DividerView xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -18,7 +18,7 @@
         app:roundStart="true"
         app:size="16dp" />
 
-    <com.geostar.solrtest.android.view.DividerView xmlns:app="http://schemas.android.com/apk/res-auto"
+    <com.hanlyjiang.learnandroid.android.view.DividerView xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="10dp"
         android:layout_marginTop="20dp"
@@ -30,7 +30,7 @@
         app:roundStart="true"
         app:size="8dp" />
 
-    <com.geostar.solrtest.android.view.DividerView xmlns:app="http://schemas.android.com/apk/res-auto"
+    <com.hanlyjiang.learnandroid.android.view.DividerView xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.geostar.solrtest.dialog.DialogTestActivity">
+    tools:context="com.hanlyjiang.learnandroid.dialog.DialogTestActivity">
 
 
     <Button
