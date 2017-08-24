@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">非地图类功能测试</string>
+    <string name="app_name">功能测试集合</string>
     <string name="connect">连接</string>
     <string name="login_ftp">登录FTP</string>
     <string name="download_file">下载文件</string>
@@ -35,4 +35,5 @@
     <string name="message">消息</string>
     <string name="status">动态</string>
     <string name="fragment_nested">Fragment嵌套测试</string>
+    <string name="test_wps_edit_file">测试WPS编辑更新文档</string>
 </resources>
