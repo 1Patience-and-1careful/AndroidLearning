@@ -17,27 +17,19 @@ dependencies {
         exclude group: 'org.apache.httpcomponents', module: 'httpcore'
     }
     compile 'com.android.support:support-v4:' + rootProject.ext.supportLibVersion
-
     compile 'com.android.support:appcompat-v7:' + rootProject.ext.supportLibVersion
-
     compile 'com.android.support:recyclerview-v7:' + rootProject.ext.supportLibVersion
-
     testCompile 'junit:junit:' + rootProject.ext.junitVersion
-
     //http://commons.apache.org/proper/commons-net/
-
     // PhotoView : https://github.com/chrisbanes/PhotoView
     // https://github.com/square/picasso
     //https://github.com/romandanylyk/PageIndicatorView
     //    compile 'com.android.support:support-core-ui:' + rootProject.ext.supportLibVersion
-
     // PhotoView : https://github.com/chrisbanes/PhotoView
     // https://github.com/square/picasso
     //https://github.com/romandanylyk/PageIndicatorView
     //    compile 'com.android.support:support-core-ui:' + rootProject.ext.supportLibVersion
-
     // logger tools library : https://github.com/orhanobut/logger
-
     compile 'org.apache.httpcomponents:httpclient-android:4.3.5'
     compile 'commons-net:commons-net:3.3'
     compile 'com.google.android.gms:play-services-appindexing:8.4.0'
@@ -50,6 +42,7 @@ dependencies {
     compile 'com.orhanobut:logger:1.15'
     compile 'com.jakewharton:butterknife:8.7.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.7.0'
+    compile 'org.greenrobot:greendao:2.2.1'
 }
 
 //https://docs.gradle.org/current/dsl/org.gradle.api.artifacts.dsl.RepositoryHandler.html
@@ -63,7 +56,7 @@ android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
     defaultConfig {
-        applicationId "com.geostar.solrtest"
+        applicationId "com.hanlyjiang.learnandorid"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

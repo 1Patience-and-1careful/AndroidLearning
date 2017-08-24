@@ -20,7 +20,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="com.hanlyjiang.learnandroid.LauncherMenuListActivity"
+            android:name=".LauncherMenuListActivity"
             android:label="非地图类功能测试"
             android:theme="@style/AppTheme">
             <intent-filter>
@@ -30,14 +30,14 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.hanlyjiang.learnandroid.ftp.FTPDownloadActivity"
+            android:name=".ftp.FTPDownloadActivity"
             android:label="@string/ftp_download_test">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.hanlyjiang.learnandroid.LauncherMenuListActivity" />
         </activity>
         <activity
-            android:name="com.hanlyjiang.learnandroid.solr.SolrTestActivity"
+            android:name=".solr.SolrTestActivity"
             android:label="Solr 服务连接测试">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -51,22 +51,22 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name="com.hanlyjiang.learnandroid.solr.request.TwoFuncTestActivity" />
+        <activity android:name=".solr.request.TwoFuncTestActivity" />
         <activity
-            android:name="com.hanlyjiang.learnandroid.android.recyclerview.RecyclerViewHorizonActivity"
+            android:name=".android.recyclerview.RecyclerViewHorizonActivity"
             android:theme="@style/AppTheme" />
-        <activity android:name="com.hanlyjiang.learnandroid.android.view.SimpleViewGroupActivity" />
-        <activity android:name="com.hanlyjiang.learnandroid.IntentTestActivity" />
-        <activity android:name="com.hanlyjiang.learnandroid.android.view.MainDividerActivity" />
-        <activity android:name="com.hanlyjiang.learnandroid.android.listview.ExpandableListActivity" />
-        <activity android:name="com.hanlyjiang.learnandroid.android.listview.DeptmentActivity" />
-        <activity android:name="com.hanlyjiang.learnandroid.android.simple.NestedViewActivity" />
-        <activity android:name="com.hanlyjiang.learnandroid.android.anim.AnimTestActivity" />
-        <activity android:name="com.hanlyjiang.learnandroid.android.view.ActivitySelectedView" />
-        <activity android:name="com.hanlyjiang.learnandroid.components.ImageViewActivity" />
-        <activity android:name="com.hanlyjiang.learnandroid.components.TestImageViewActivity" />
+        <activity android:name=".android.view.SimpleViewGroupActivity" />
+        <activity android:name=".IntentTestActivity" />
+        <activity android:name=".android.view.MainDividerActivity" />
+        <activity android:name=".android.listview.ExpandableListActivity" />
+        <activity android:name=".android.listview.DeptmentActivity" />
+        <activity android:name=".android.simple.NestedViewActivity" />
+        <activity android:name=".android.anim.AnimTestActivity" />
+        <activity android:name=".android.view.ActivitySelectedView" />
+        <activity android:name=".components.ImageViewActivity" />
+        <activity android:name=".components.TestImageViewActivity" />
 
-        <receiver android:name="com.hanlyjiang.learnandroid.android.view.NewAppWidget">
+        <receiver android:name=".android.view.NewAppWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -76,21 +76,22 @@
                 android:resource="@xml/new_app_widget_info" />
         </receiver>
 
-        <activity android:name="com.hanlyjiang.learnandroid.android.view.NewAppWidgetConfigureActivity">
+        <activity android:name=".android.view.NewAppWidgetConfigureActivity">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>
         </activity>
-        <activity android:name="com.hanlyjiang.learnandroid.android.anim.CrossfadingTwoViewActivity" />
-        <activity android:name="com.hanlyjiang.learnandroid.dialog.DialogTestActivity" />
-        <activity android:name="com.hanlyjiang.learnandroid.android.popup.PopUpTestActivity" />
+        <activity android:name=".android.anim.CrossfadingTwoViewActivity" />
+        <activity android:name=".dialog.DialogTestActivity" />
+        <activity android:name=".android.popup.PopUpTestActivity" />
         <activity
-            android:name="com.hanlyjiang.learnandroid.android.fragment.FragmentNestedActivity"
+            android:name=".android.fragment.FragmentNestedActivity"
             android:label="@string/fragment_nested"
             android:screenOrientation="landscape"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity android:name="com.hanlyjiang.learnandroid.android.view.ScrollViewLocateActivity" />
-        <activity android:name="com.hanlyjiang.learnandroid.android.listview.ActivityNestedListView"></activity>
+        <activity android:name=".android.view.ScrollViewLocateActivity" />
+        <activity android:name=".android.listview.ActivityNestedListView" />
+        <activity android:name=".document.WPSEditTestActivity"></activity>
     </application>
 
 </manifest>

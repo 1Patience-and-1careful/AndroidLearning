@@ -24,6 +24,7 @@ import com.hanlyjiang.learnandroid.android.view.ScrollViewLocateActivity;
 import com.hanlyjiang.learnandroid.android.view.SimpleViewGroupActivity;
 import com.hanlyjiang.learnandroid.components.TestImageViewActivity;
 import com.hanlyjiang.learnandroid.dialog.DialogTestActivity;
+import com.hanlyjiang.learnandroid.document.WPSEditTestActivity;
 import com.hanlyjiang.learnandroid.ftp.FTPDownloadActivity;
 import com.hanlyjiang.learnandroid.solr.SolrTestActivity;
 import com.hanlyjiang.learnandroid.solr.request.TwoFuncTestActivity;
@@ -58,6 +59,7 @@ public class LauncherMenuListActivity extends AppCompatActivity implements Adapt
 
     private void setStartItems() {
         mActivities = new ArrayList<>();
+        mActivities.add(makeActItem(WPSEditTestActivity.class, "WPS文档编辑测试", "WPS文档编辑测试预言"));
         mActivities.add(makeActItem(ActivityNestedListView.class, "ScrollView 中嵌套ListView滚动视图", "嵌套ListView滚动视图"));
         mActivities.add(makeActItem(ScrollViewLocateActivity.class, "ScrollView 中定位滚动视图", "定位滚动视图"));
         mActivities.add(makeActItem(FragmentNestedActivity.class, "Fragment嵌套测试", "Fragment嵌套测试 - Fragment 嵌套Fragment 并切换"));
