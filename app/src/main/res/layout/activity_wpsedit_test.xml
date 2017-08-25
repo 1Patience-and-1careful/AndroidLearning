@@ -6,25 +6,9 @@
     android:orientation="vertical"
     tools:context="com.hanlyjiang.learnandroid.document.WPSEditTestActivity">
 
-
-    <ListView
-        android:id="@+id/listview_doclist"
+    <FrameLayout
+        android:id="@+id/fl_fragment_stub"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:id="@+id/tv_logs"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ellipsize="start"
-            android:maxHeight="100dp"
-            android:maxLines="30"
-            android:text="调用WPS打开文档" />
-    </ScrollView>
-
+        android:layout_height="match_parent" />
 
 </LinearLayout>
