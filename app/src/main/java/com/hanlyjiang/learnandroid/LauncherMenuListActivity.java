@@ -9,6 +9,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
+import com.hanlyjiang.learnandroid.android.CircleMarkTimeViewActivity;
 import com.hanlyjiang.learnandroid.android.anim.AnimTestActivity;
 import com.hanlyjiang.learnandroid.android.anim.CrossfadingTwoViewActivity;
 import com.hanlyjiang.learnandroid.android.fragment.FragmentNestedActivity;
@@ -16,9 +17,11 @@ import com.hanlyjiang.learnandroid.android.listview.ActivityNestedListView;
 import com.hanlyjiang.learnandroid.android.listview.DeptmentActivity;
 import com.hanlyjiang.learnandroid.android.listview.ExpandableListActivity;
 import com.hanlyjiang.learnandroid.android.popup.PopUpTestActivity;
+import com.hanlyjiang.learnandroid.android.process.KillProcessActivity;
 import com.hanlyjiang.learnandroid.android.recyclerview.RecyclerViewHorizonActivity;
 import com.hanlyjiang.learnandroid.android.simple.NestedViewActivity;
 import com.hanlyjiang.learnandroid.android.view.ActivitySelectedView;
+import com.hanlyjiang.learnandroid.android.view.CircleMarkTimeView;
 import com.hanlyjiang.learnandroid.android.view.MainDividerActivity;
 import com.hanlyjiang.learnandroid.android.view.ScrollViewLocateActivity;
 import com.hanlyjiang.learnandroid.android.view.SimpleViewGroupActivity;
@@ -59,6 +62,8 @@ public class LauncherMenuListActivity extends AppCompatActivity implements Adapt
 
     private void setStartItems() {
         mActivities = new ArrayList<>();
+        mActivities.add(makeActItem(CircleMarkTimeViewActivity.class, "自定义时间View", "自定义时间View"));
+        mActivities.add(makeActItem(KillProcessActivity.class, "进程kill测试", "进程kill测试"));
         mActivities.add(makeActItem(WPSEditTestActivity.class, "WPS文档编辑测试", "WPS文档编辑测试预言"));
         mActivities.add(makeActItem(ActivityNestedListView.class, "ScrollView 中嵌套ListView滚动视图", "嵌套ListView滚动视图"));
         mActivities.add(makeActItem(ScrollViewLocateActivity.class, "ScrollView 中定位滚动视图", "定位滚动视图"));

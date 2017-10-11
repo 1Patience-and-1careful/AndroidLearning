@@ -12,6 +12,7 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
 
     <application
         android:allowBackup="true"
@@ -91,7 +92,11 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity android:name=".android.view.ScrollViewLocateActivity" />
         <activity android:name=".android.listview.ActivityNestedListView" />
-        <activity android:name=".document.WPSEditTestActivity" android:label="@string/test_wps_edit_file"></activity>
+        <activity
+            android:name=".document.WPSEditTestActivity"
+            android:label="@string/test_wps_edit_file" />
+        <activity android:name=".android.process.KillProcessActivity" />
+        <activity android:name=".android.CircleMarkTimeViewActivity"></activity>
     </application>
 
 </manifest>

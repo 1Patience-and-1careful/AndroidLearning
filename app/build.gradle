@@ -41,8 +41,8 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.orhanobut:logger:1.15'
     compile 'com.jakewharton:butterknife:8.7.0'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.7.0'
     compile 'org.greenrobot:greendao:2.2.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.7.0'
 }
 
 //https://docs.gradle.org/current/dsl/org.gradle.api.artifacts.dsl.RepositoryHandler.html

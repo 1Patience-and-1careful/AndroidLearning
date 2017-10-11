@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CircleMarkTimeView">
+        <attr name="markText" format="string"></attr>
+        <attr name="dialColor" format="color"></attr>
+        <attr name="shadowColor" format="color"></attr>
+        <attr name="shadowWidth" format="dimension"></attr>
+        <attr name="markTextColor" format="color"></attr>
+        <attr name="timeTextColor" format="color"></attr>
+        <attr name="timeTextSize" format="dimension"></attr>
+        <attr name="markTextSize" format="dimension"></attr>
+    </declare-styleable>
+</resources>
