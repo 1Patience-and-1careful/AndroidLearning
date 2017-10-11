@@ -283,8 +283,4 @@ public class CircleMarkTimeView extends View {
         onTimeChanged();
     }
 
-    public void enableSeconds(boolean enable) {
-        mNoSeconds = !enable;
-    }
-
 }
