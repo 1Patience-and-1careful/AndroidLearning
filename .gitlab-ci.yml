@@ -30,7 +30,7 @@ unitTests:
     - echo "Start UnitTests"
     - gradle test
   artifacts:
-    path:
+    paths:
     - app/build/reports/tests/
 
 functionalTests:
