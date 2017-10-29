@@ -1,0 +1,39 @@
+# This file is a template, and might need editing before it works on your project.
+# Read more about this script on this blog post https://about.gitlab.com/2016/11/30/setting-up-gitlab-ci-for-android-projects/, by Greyson Parrelli
+image: openjdk:8-jdk
+
+variables:
+  ANDROID_COMPILE_SDK: "25"
+  ANDROID_BUILD_TOOLS: "25.0.2"
+  ANDROID_SDK_TOOLS: "25.0.2"
+  ANDROID_HOME: "/Users/hanlyjiang/Library/Android/sdk"
+
+before_script:
+  - echo start build
+
+stages:
+  - build
+  - test
+
+
+build:
+  stage: build
+  script:
+    - gradle assembleDebug
+  artifacts:
+    paths:
+    - app/build/outputs/
+
+unitTests:
+  stage: test
+  script:
+    - echo "gradle test"
+
+functionalTests:
+  stage: test
+  script:
+    - echo "no | android create avd -n test -t android-${ANDROID_COMPILE_SDK} --abi google_apis/x86"
+    - echo "emulator64-x86 -avd test -no-window -no-audio &"
+    - echo "./android-wait-for-emulator"
+    - echo "adb shell input keyevent 82"
+    - "gradle cAT"
