@@ -24,25 +24,22 @@ import static org.junit.Assert.assertEquals;
  */
 @RunWith(AndroidJUnit4.class)
 public class InsertCaseInfoInstrumentedTest {
+    private FileDataSource mFileDataSource;
+    private DaoMaster.DevOpenHelper mDevOpenHelper;
+
     @Test
     public void useAppContext() throws Exception {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.hanlyjiang.learnandorid", appContext.getPackageName());
+        assertEquals("com.hanlyjiang.learnandroid", appContext.getPackageName());
     }
-
-
-    private FileDataSource mFileDataSource;
-
-    private DaoMaster.DevOpenHelper mDevOpenHelper;
 
     @Test
     public void makeTestCaseFileData() throws Exception {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.hanlyjiang.learnandorid", appContext.getPackageName());
         mDevOpenHelper = new DaoMaster.DevOpenHelper(appContext, "file_db.db", null);
         DaoMaster daoMaster = new DaoMaster(mDevOpenHelper.getWritableDatabase());
         mFileDataSource = new FileDataSource(daoMaster.newSession().getCaseFileDao());

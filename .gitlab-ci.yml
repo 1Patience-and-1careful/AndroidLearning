@@ -36,5 +36,6 @@ functionalTests:
     - echo "emulator64-x86 -avd test -no-window -no-audio &"
     - echo "./android-wait-for-emulator"
     - gradle cAT
+    - gradle test
     - adb shell input keyevent 82
 
