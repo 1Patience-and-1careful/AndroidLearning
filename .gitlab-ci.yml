@@ -35,5 +35,6 @@ functionalTests:
     - echo "no | android create avd -n test -t android-${ANDROID_COMPILE_SDK} --abi google_apis/x86"
     - echo "emulator64-x86 -avd test -no-window -no-audio &"
     - echo "./android-wait-for-emulator"
-    - echo "adb shell input keyevent 82"
-    - "gradle cAT"
+    - gradle cAT
+    - adb shell input keyevent 82
+
