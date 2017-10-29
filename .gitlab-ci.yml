@@ -27,7 +27,11 @@ build:
 unitTests:
   stage: test
   script:
+    - echo "Start UnitTests"
     - gradle test
+  artifacts:
+    path:
+    - app/build/reports/tests/
 
 functionalTests:
   stage: test
@@ -40,4 +44,3 @@ functionalTests:
   artifacts:
      paths:
     - app/build/reports/androidTests/
-
