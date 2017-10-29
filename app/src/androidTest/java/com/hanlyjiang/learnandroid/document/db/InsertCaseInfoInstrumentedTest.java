@@ -50,7 +50,7 @@ public class InsertCaseInfoInstrumentedTest {
 
         List<CaseFile> caseFileList = mFileDataSource.queryAll();
         Assert.assertNotNull(caseFileList);
-        Assert.assertEquals(caseFileList.size(),1);
+        Assert.assertEquals(caseFileList.size(), 1);
         System.out.println(caseFileList.get(0).getFileName());
     }
 

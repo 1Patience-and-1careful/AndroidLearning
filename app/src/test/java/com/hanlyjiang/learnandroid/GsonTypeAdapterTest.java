@@ -1,10 +1,10 @@
 package com.hanlyjiang.learnandroid;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.hanlyjiang.learnandroid.json.DatasetTypeAdapter;
 import com.hanlyjiang.learnandroid.json.bean.Dataset;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.hanlyjiang.learnandroid.json.bean.Dataset2;
 
 import org.junit.Assert;
@@ -63,11 +63,11 @@ public class GsonTypeAdapterTest {
         Assert.assertEquals(3,dataset.getChild().getMap().size());
         Assert.assertEquals("小宝宝",dataset.getChild().getMap().get("name"));
         Assert.assertEquals("1",dataset.getChild().getMap().get("age"));
-        Assert.assertEquals("女",dataset.getChild().getMap().get("gender"));
+        Assert.assertEquals("无", dataset.getChild().getMap().get("gender"));
         System.out.println(dataset.getTitle());
 
-        String json = gson.toJson(dataset);
-        System.out.println(json);
+//        String json = gson.toJson(dataset);
+//        System.out.println(json);
     }
 
     @Test
