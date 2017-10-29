@@ -9,6 +9,13 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
+import com.hanlyjiang.learnandroid.android.CircleMarkTimeViewActivity;
+import com.hanlyjiang.learnandroid.android.listview.DeptmentActivity;
+import com.hanlyjiang.learnandroid.android.simple.NestedViewActivity;
+import com.hanlyjiang.learnandroid.android.view.MainDividerActivity;
+import com.hanlyjiang.learnandroid.android.view.SimpleViewGroupActivity;
+import com.hanlyjiang.learnandroid.viewdraw.SelfDrawView01Activity;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -16,7 +23,7 @@ import java.util.Map;
 /**
  * Created by jianghanghang on 2017/2/10.
  */
-public class LauncherMenuListActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
+public class ViewDrawListActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
 
     private List<Map<String, Object>> mActivities;
@@ -39,8 +46,12 @@ public class LauncherMenuListActivity extends AppCompatActivity implements Adapt
 
     private void setStartItems() {
         mActivities = new ArrayList<>();
-        mActivities.add(makeActItem(ViewDrawListActivity.class, "自定义View系列", "自定义View系列示例"));
-        mActivities.add(makeActItem(OldLauncherMenuListActivity.class, "杂项示例", "原先的示例，用于平常开发各种测试"));
+        mActivities.add(makeActItem(SelfDrawView01Activity.class, "自定义View绘制", "自定义View绘制"));
+        mActivities.add(makeActItem(CircleMarkTimeViewActivity.class, "自定义时间View", "自定义时间View"));
+        mActivities.add(makeActItem(SimpleViewGroupActivity.class, "ViewGroup 测试 ", "测试ViewGroup 自定义\n "));
+        mActivities.add(makeActItem(MainDividerActivity.class, "自定义View 测试 ", "自定义分割线\n "));
+        mActivities.add(makeActItem(DeptmentActivity.class, "组织结构 测试 ", "组织结构\n "));
+        mActivities.add(makeActItem(NestedViewActivity.class, "嵌套滚动View测试", "嵌套滚动View测试\n "));
     }
 
     private Map<String, Object> makeActItem(Class activity, String title, String decs) {

@@ -56,6 +56,7 @@ public class WPSEditTestActivity extends AppCompatActivity implements CaseFileLi
         mDevOpenHelper = new DaoMaster.DevOpenHelper(this, "file_db.db", null);
         DaoMaster daoMaster = new DaoMaster(mDevOpenHelper.getWritableDatabase());
         mFileDataSource = new FileDataSource(daoMaster.newSession().getCaseFileDao());
+        // 首次运行开启下面语句，可以
 //        addAData();
     }
 

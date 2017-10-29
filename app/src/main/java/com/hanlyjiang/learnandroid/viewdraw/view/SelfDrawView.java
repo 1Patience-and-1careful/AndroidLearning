@@ -1,4 +1,4 @@
-package com.hanlyjiang.learnandroid.android.view;
+package com.hanlyjiang.learnandroid.viewdraw.view;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -27,7 +27,7 @@ import java.util.TimeZone;
  * @version 1.0
  */
 
-public class CircleMarkTimeView extends View {
+public class SelfDrawView extends View {
 
     private final Handler mHandler = new Handler();
     private final Context mContext;
@@ -62,23 +62,23 @@ public class CircleMarkTimeView extends View {
         public void run() {
             onTimeChanged();
             invalidate();
-            CircleMarkTimeView.this.postDelayed(mClockTick, 1000);
+            SelfDrawView.this.postDelayed(mClockTick, 1000);
         }
     };
     private Paint mTextPaint, mDialPaint, mShadowPaint;
     private float mDialWidth = dp2px(120);
     private float mDialHeight = dp2px(120);
 
-    public CircleMarkTimeView(Context context) {
+    public SelfDrawView(Context context) {
         this(context, null);
     }
 
-    public CircleMarkTimeView(Context context, AttributeSet attrs) {
+    public SelfDrawView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public CircleMarkTimeView(Context context, AttributeSet attrs,
-                              int defStyle) {
+    public SelfDrawView(Context context, AttributeSet attrs,
+                        int defStyle) {
         super(context, attrs, defStyle);
         mContext = context;
         Resources r = mContext.getResources();
