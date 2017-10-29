@@ -6,6 +6,7 @@ variables:
   ANDROID_COMPILE_SDK: "25"
   ANDROID_BUILD_TOOLS: "25.0.2"
   ANDROID_SDK_TOOLS: "25.0.2"
+  ANDROID_HOME: "/Users/hanlyjiang/Library/Android/sdk"
 
 before_script:
   - echo start build
