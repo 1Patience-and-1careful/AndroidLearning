@@ -13,6 +13,7 @@ before_script:
 
 stages:
   - build
+  - test
 
 
 build:
@@ -26,14 +27,13 @@ build:
 unitTests:
   stage: test
   script:
-    - gradle test
+    - echo "gradle test"
 
 functionalTests:
   stage: test
   script:
-    - echo y | android --silent update sdk --no-ui --all --filter sys-img-x86-google_apis-${ANDROID_COMPILE_SDK}
-    - echo no | android create avd -n test -t android-${ANDROID_COMPILE_SDK} --abi google_apis/x86
-    - emulator64-x86 -avd test -no-window -no-audio &
-    - ./android-wait-for-emulator
-    - adb shell input keyevent 82
-    - gradle cAT
+    - echo "no | android create avd -n test -t android-${ANDROID_COMPILE_SDK} --abi google_apis/x86"
+    - echo "emulator64-x86 -avd test -no-window -no-audio &"
+    - echo "./android-wait-for-emulator"
+    - echo "adb shell input keyevent 82"
+    - "gradle cAT"
