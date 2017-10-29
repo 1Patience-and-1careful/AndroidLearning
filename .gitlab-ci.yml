@@ -27,7 +27,7 @@ build:
 unitTests:
   stage: test
   script:
-    - echo "gradle test"
+    - gradle test
 
 functionalTests:
   stage: test
@@ -35,7 +35,9 @@ functionalTests:
     - echo "no | android create avd -n test -t android-${ANDROID_COMPILE_SDK} --abi google_apis/x86"
     - echo "emulator64-x86 -avd test -no-window -no-audio &"
     - echo "./android-wait-for-emulator"
-    - gradle cAT
-    - gradle test
     - adb shell input keyevent 82
+    - gradle cAT
+  artifacts:
+     paths:
+    - app/build/reports/androidTests/
 
